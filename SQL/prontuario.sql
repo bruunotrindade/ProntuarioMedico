@@ -7,10 +7,18 @@ CREATE TABLE pacientes (
     ID INT PRIMARY KEY,
     NOME VARCHAR(50),
     CPF VARCHAR(15),
-    SENHA VARCHAR(200),
     DT_NASCIMENTO DATE,
-    ALTURA DOUBLE,
-    PESO DOUBLE,
+    ESTADO_CIVIL varchar(50),
+    CONJUGE varchar(50),
+    ENDERECO varchar(60),
+    BAIRRO varchar(50),
+    CIDADE varchar(50),
+    CEP varchar(50),
+    UF char(2),
+    FONE varchar(25),
+    EMAIL varchar(50),
+    PROFISSAO varchar(50),
+    OBITO char(1),
     OBS VARCHAR(100)
 );
 
@@ -22,6 +30,7 @@ CREATE TABLE funcionarios (
     SENHA VARCHAR(200),
     DT_NASCIMENTO DATE,
     FUNCAO VARCHAR(50),
+    ATIVO char(1),
     PERMISSAO INT
 );
 
@@ -31,11 +40,12 @@ CREATE TABLE consultas (
     OBSERVACOES VARCHAR(100),
     DATA_HORA DATE,
     PACIENTE_ID INT,
-    SAUDE_ID INT
+    MEDICO_ID INT
 );
 
-CREATE TABLE saudes (
+CREATE TABLE medicos (
     ID INT PRIMARY KEY,
+    CRM varchar(20),
     NOME VARCHAR(50),
     CPF VARCHAR(20),
     SENHA VARCHAR(200),
@@ -71,10 +81,10 @@ ALTER TABLE consultas ADD CONSTRAINT FK_consulta_2
     ON DELETE SET NULL;
  
 ALTER TABLE consultas ADD CONSTRAINT FK_consulta_3
-    FOREIGN KEY (SAUDE_ID)
-    REFERENCES saudes (ID);
+    FOREIGN KEY (MEDICO_ID)
+    REFERENCES medicos (ID);
  
-ALTER TABLE saudes ADD CONSTRAINT FK_saude_2
+ALTER TABLE medicos ADD CONSTRAINT FK_saude_2
     FOREIGN KEY (fk_consulta_ID)
     REFERENCES consultas (ID)
     ON DELETE SET NULL;
