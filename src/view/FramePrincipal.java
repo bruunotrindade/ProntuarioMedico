@@ -23,8 +23,9 @@ import javax.swing.JMenuItem;
 public class FramePrincipal extends JFrame 
 {
 	private JPanel contentPane;
-	private JMenu mArquivo, mCadastro, mConsulta, mUtilitario;
-	private boolean acessoAutorizado = false;
+	private JMenu mPaciente, mConsulta, mGerencia, mConta, mOutros;
+	private JMenuItem miNovoPaciente, miGerenciarPacientes, miGerenciarConsultas, miAlterarAnamnese, miAlterarHistorico, miGerenciarMedicos, miGerenciarFuncionarios, miNovaConsulta, miAlterarDados, miAlterarSenha, miAjuda, miSobre;
+	private boolean acessoAutorizado = false;//Alterar para quando tiver o model Funcionario
 	
 	public static void main(String[] args) 
 	{
@@ -34,21 +35,171 @@ public class FramePrincipal extends JFrame
 	
 	public FramePrincipal() 
 	{		
+		AbstractAction action;
 		//Configurações do JMenuBar
 		JMenuBar mbMenu = new JMenuBar();
 		mbMenu.setBackground(Color.WHITE);
 		mbMenu.setBorder(BorderFactory.createRaisedBevelBorder());
 		mbMenu.setBorderPainted(true);
-		mbMenu.add(mArquivo = new JMenu("Arquivo"));
-		mbMenu.add(mCadastro = new JMenu("Cadastro"));
+		mbMenu.add(mPaciente = new JMenu("Paciente"));
 		mbMenu.add(mConsulta = new JMenu("Consulta"));
-		mbMenu.add(mUtilitario = new JMenu("Utilitário"));
+		mbMenu.add(mGerencia = new JMenu("Gerência"));
+		mbMenu.add(mConta = new JMenu("Conta"));
+		mbMenu.add(mOutros = new JMenu("Outros"));
 		
 		//Configurações dos JMenu
-		setJMenuAction(mArquivo, "Arquivo", KeyEvent.VK_A, "Não definido.");
-		setJMenuAction(mCadastro, "Cadastro", KeyEvent.VK_C, "Recursos referentes a cadastro de pacientes.");
-		setJMenuAction(mConsulta, "Consulta", KeyEvent.VK_O, "Recursos referentes a consulta de pacientes.");
-		setJMenuAction(mUtilitario, "Utilitário", KeyEvent.VK_U, "Não definido ainda.");
+		//==============// JMenu Paciente e seus itens //==============//
+		setJMenuAction(mPaciente, "Paciente", KeyEvent.VK_P, "Recursos referentes a pacientes.");
+		//Configuração do JMenuItem de gerenciar consultas
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Novo paciente");
+		mPaciente.add(miNovoPaciente = new JMenuItem(action));
+		mPaciente.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		
+		//Configuração do JMenuItem de gerenciar consultas
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Gerenciar pacientes");
+		mPaciente.add(miGerenciarPacientes = new JMenuItem(action));
+		
+		//==============// JMenu Consulta e seus itens //==============//
+		setJMenuAction(mConsulta, "Consulta", KeyEvent.VK_C, "Recursos referentes a consulta de pacientes.");
+		mConsulta.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		
+		//Configuração do JMenuItem de gerenciar consultas
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Nova consulta");
+		mConsulta.add(miNovaConsulta = new JMenuItem(action));
+		
+		//Configuração do JMenuItem de gerenciar consultas
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Gerenciar consultas");
+		mConsulta.add(miGerenciarConsultas = new JMenuItem(action));
+		
+		//==============// JMenu Gerência e seus itens //==============//
+		setJMenuAction(mGerencia, "Gerência", KeyEvent.VK_G, "Não definido ainda.");	
+		mGerencia.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+
+		//Configuração do JMenuItem de gerenciar funcionários
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Gerenciar funcionários");
+		mGerencia.add(miGerenciarFuncionarios = new JMenuItem(action));
+		
+		//Configuração do JMenuItem de gerenciar médicos
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Gerenciar médicos");
+		mGerencia.add(miGerenciarMedicos = new JMenuItem(action));
+				
+		//Configuração do JMenuItem de alterar anamnese
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Alterar questões da anamnese");
+		mGerencia.add(miAlterarAnamnese = new JMenuItem(action));
+		
+		//Configuração do JMenuItem de alterar histórico familiar
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Alterar questões do histórico familiar");
+		mGerencia.add(miAlterarHistorico = new JMenuItem(action));
+		
+		//==============// JMenu Conta e seus itens //==============//
+		setJMenuAction(mConta, "Conta", KeyEvent.VK_O, "Não definido.");
+		mConta.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		
+		//Configuração do JMenuItem de alterar dados da conta
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Alterar dados");
+		mConta.add(miAlterarDados = new JMenuItem(action));
+		
+		//Configuração do JMenuItem de alterar senha
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Alterar senha");
+		mConta.add(miAlterarSenha = new JMenuItem(action));
+		
+		//==============// JMenu Outros e seus itens //==============//
+		setJMenuAction(mOutros, "Outros", 0, "Não definido.");
+		mOutros.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		
+		//Configuração do JMenuItem de alterar dados da conta
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Ajuda");
+		mOutros.add(miAjuda = new JMenuItem(action));
+		miAjuda.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/teste.png")));
+		
+		//Configuração do JMenuItem de alterar senha
+		action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, "Sobre");
+		mOutros.add(miSobre = new JMenuItem(action));
+		
 		
 		//Configuração do Background
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -66,7 +217,7 @@ public class FramePrincipal extends JFrame
 		setVisible(true);
 		setJMenuBar(mbMenu);
 		setTitle("Prontuário Médico");
-		new DialogLogin(this);
+		//new DialogLogin(this);
 	}
 	
 	public void setJMenuAction(JMenu m, String nome, int tecla, String descricao)

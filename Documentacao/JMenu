@@ -1,0 +1,22 @@
+
+Paciente
+    -> Novo paciente
+    -> Gerenciar pacientes
+
+Consulta
+    -> Nova consulta
+    -> Gerenciar consultas
+
+Gerência
+    -> Gerenciar funcionários
+    -> Gerenciar médicos
+    -> Alterar questões da anamnese
+    -> Alterar questões do histórico familiar
+
+Conta
+    -> Alterar dados
+    -> Alterar senha    
+
+Outros
+    -> Ajuda
+    -> Sobre

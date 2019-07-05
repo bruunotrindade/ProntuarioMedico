@@ -168,7 +168,7 @@ public class DialogLogin extends JDialog {
 		setSize(400, 290);
 		setLocationRelativeTo(null);
 		setVisible(true);
-		setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setTitle("Login");
 	}
 }
