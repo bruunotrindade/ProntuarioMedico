@@ -3,7 +3,7 @@ CREATE DATABASE prontuario;
 USE prontuario;
 /* Lógico_2: */
 
-CREATE TABLE paciente (
+CREATE TABLE pacientes (
     ID INT PRIMARY KEY,
     NOME VARCHAR(50),
     CPF VARCHAR(15),
@@ -14,17 +14,18 @@ CREATE TABLE paciente (
     OBS VARCHAR(100)
 );
 
-CREATE TABLE funcionario (
+CREATE TABLE funcionarios (
     ID INT PRIMARY KEY,
     MATRICULA VARCHAR(20),
     NOME VARCHAR(50),
     CPF VARCHAR(20),
     SENHA VARCHAR(200),
     DT_NASCIMENTO DATE,
-    FUNCAO VARCHAR(50)
+    FUNCAO VARCHAR(50),
+    PERMISSAO INT
 );
 
-CREATE TABLE consulta (
+CREATE TABLE consultas (
     ID INT PRIMARY KEY,
     SINTOMAS VARCHAR(300),
     OBSERVACOES VARCHAR(100),
@@ -33,7 +34,7 @@ CREATE TABLE consulta (
     SAUDE_ID INT
 );
 
-CREATE TABLE saude (
+CREATE TABLE saudes (
     ID INT PRIMARY KEY,
     NOME VARCHAR(50),
     CPF VARCHAR(20),
@@ -64,18 +65,18 @@ CREATE TABLE procedimentos (
     CONSULTA_ID INT
 );
  
-ALTER TABLE consulta ADD CONSTRAINT FK_consulta_2
+ALTER TABLE consultas ADD CONSTRAINT FK_consulta_2
     FOREIGN KEY (PACIENTE_ID)
-    REFERENCES paciente (ID)
+    REFERENCES pacientes (ID)
     ON DELETE SET NULL;
  
-ALTER TABLE consulta ADD CONSTRAINT FK_consulta_3
+ALTER TABLE consultas ADD CONSTRAINT FK_consulta_3
     FOREIGN KEY (SAUDE_ID)
-    REFERENCES saude (ID);
+    REFERENCES saudes (ID);
  
-ALTER TABLE saude ADD CONSTRAINT FK_saude_2
+ALTER TABLE saudes ADD CONSTRAINT FK_saude_2
     FOREIGN KEY (fk_consulta_ID)
-    REFERENCES consulta (ID)
+    REFERENCES consultas (ID)
     ON DELETE SET NULL;
  
 ALTER TABLE respostas ADD CONSTRAINT FK_respostas_2
@@ -85,9 +86,9 @@ ALTER TABLE respostas ADD CONSTRAINT FK_respostas_2
  
 ALTER TABLE respostas ADD CONSTRAINT FK_respostas_3
     FOREIGN KEY (PACIENTE_ID)
-    REFERENCES paciente (ID)
+    REFERENCES pacientes (ID)
     ON DELETE SET NULL;
  
 ALTER TABLE procedimentos ADD CONSTRAINT FK_procedimentos_1
     FOREIGN KEY (CONSULTA_ID)
-    REFERENCES consulta (ID);
+    REFERENCES consultas (ID);
