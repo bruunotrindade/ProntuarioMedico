@@ -1,4 +1,4 @@
-package models;
+package model;
 
 public class Consulta {
 	private int id;
@@ -74,6 +74,4 @@ public class Consulta {
 	public void setMedico(Medico medico) {
 		this.medico = medico;
 	}
-	
-	
 }
