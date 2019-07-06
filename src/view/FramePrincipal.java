@@ -30,7 +30,6 @@ public class FramePrincipal extends JFrame
 	public static void main(String[] args) 
 	{
 		new FramePrincipal();
-		
 	}
 	
 	public FramePrincipal() 
@@ -49,163 +48,70 @@ public class FramePrincipal extends JFrame
 		
 		//Configurações dos JMenu
 		//==============// JMenu Paciente e seus itens //==============//
-		setJMenuAction(mPaciente, "Paciente", KeyEvent.VK_P, "Recursos referentes a pacientes.");
-		mPaciente.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/paciente.png")));
+		setJMenuConfig(mPaciente, "Paciente", KeyEvent.VK_P, new ImageIcon(getClass().getClassLoader().getResource("Imagens/paciente.png")));
 		
 		//Configuração do JMenuItem de gerenciar consultas
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Novo paciente");
-		mPaciente.add(miNovoPaciente = new JMenuItem(action));
+		mPaciente.add(miNovoPaciente = new JMenuItem());
+		setJMenuItemConfig(miNovoPaciente, "Nova paciente", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
 		
 		//Configuração do JMenuItem de gerenciar consultas
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Gerenciar pacientes");
-		mPaciente.add(miGerenciarPacientes = new JMenuItem(action));
+		mPaciente.add(miGerenciarPacientes = new JMenuItem());
+		setJMenuItemConfig(miGerenciarPacientes, "Gerenciar pacientes", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
 		
 		//==============// JMenu Consulta e seus itens //==============//
-		setJMenuAction(mConsulta, "Consulta", KeyEvent.VK_C, "Recursos referentes a consulta de pacientes.");
-		mConsulta.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/consulta.png")));
+		setJMenuConfig(mConsulta, "Consulta", KeyEvent.VK_C, new ImageIcon(getClass().getClassLoader().getResource("Imagens/consulta.png")));
 		
 		//Configuração do JMenuItem de gerenciar consultas
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Nova consulta");
-		mConsulta.add(miNovaConsulta = new JMenuItem(action));
+		mConsulta.add(miNovaConsulta = new JMenuItem());
+		setJMenuItemConfig(miNovaConsulta, "Nova consulta", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
 		
 		//Configuração do JMenuItem de gerenciar consultas
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Gerenciar consultas");
-		mConsulta.add(miGerenciarConsultas = new JMenuItem(action));
+		mConsulta.add(miGerenciarConsultas = new JMenuItem());
+		setJMenuItemConfig(miGerenciarConsultas, "Gerenciar consultas", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
 		
 		//==============// JMenu Gerência e seus itens //==============//
-		setJMenuAction(mGerencia, "Gerência", KeyEvent.VK_G, "Não definido ainda.");	
-		mGerencia.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia.png")));
+		setJMenuConfig(mGerencia, "Gerência", KeyEvent.VK_G, new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia.png")));	
 
 		//Configuração do JMenuItem de gerenciar funcionários
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Gerenciar funcionários");
-		mGerencia.add(miGerenciarFuncionarios = new JMenuItem(action));
-		miGerenciarFuncionarios.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerenciar_funcionarios.png")));
-
+		mGerencia.add(miGerenciarFuncionarios = new JMenuItem());
+		setJMenuItemConfig(miGerenciarFuncionarios, "Gerenciar funcionários", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerenciar_funcionarios.png")));
+		
 		//Configuração do JMenuItem de gerenciar médicos
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Gerenciar médicos");
-		mGerencia.add(miGerenciarMedicos = new JMenuItem(action));
-		miGerenciarMedicos.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+		mGerencia.add(miGerenciarMedicos = new JMenuItem());
+		setJMenuItemConfig(miGerenciarMedicos, "Gerenciar médicos", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+		
 
 		//Configuração do JMenuItem de alterar anamnese
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Alterar questões da anamnese");
-		mGerencia.add(miAlterarAnamnese = new JMenuItem(action));
-		miAlterarAnamnese.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_anamnese.png")));
+		mGerencia.add(miAlterarAnamnese = new JMenuItem());
+		setJMenuItemConfig(miAlterarAnamnese, "Alterar questões do anamnese", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_anamnese.png")));
+		
 		//Configuração do JMenuItem de alterar histórico familiar
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Alterar questões do histórico familiar");
-		mGerencia.add(miAlterarHistorico = new JMenuItem(action));
-		miAlterarHistorico.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_historico.png")));
+		mGerencia.add(miAlterarHistorico = new JMenuItem());
+		setJMenuItemConfig(miAlterarHistorico, "Alterar questões do histórico familiar", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_historico.png")));
 		
 		//==============// JMenu Conta e seus itens //==============//
-		setJMenuAction(mConta, "Conta", KeyEvent.VK_O, "Não definido.");
-		mConta.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/conta.png")));
+		setJMenuConfig(mConta, "Conta", KeyEvent.VK_O, new ImageIcon(getClass().getClassLoader().getResource("Imagens/conta.png")));
 		
 		//Configuração do JMenuItem de alterar dados da conta
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Alterar dados");
-		mConta.add(miAlterarDados = new JMenuItem(action));
+		mConta.add(miAlterarDados = new JMenuItem());
+		setJMenuItemConfig(miAlterarDados, "Alterar dados", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_senha.png")));
 		
 		//Configuração do JMenuItem de alterar senha
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Alterar senha");
-		mConta.add(miAlterarSenha = new JMenuItem(action));
-		miAlterarSenha.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_senha.png")));
+		mConta.add(miAlterarSenha = new JMenuItem());
+		setJMenuItemConfig(miAlterarSenha, "Alterar senha", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_senha.png")));
 		
 		//==============// JMenu Outros e seus itens //==============//
-		setJMenuAction(mOutros, "Outros", 0, "Não definido.");
-		mOutros.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/outros.png")));
+		setJMenuConfig(mOutros, "Outros", 0, new ImageIcon(getClass().getClassLoader().getResource("Imagens/outros.png")));
 		
 		//Configuração do JMenuItem de ajuda
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Ajuda");
-		mOutros.add(miAjuda = new JMenuItem(action));
-		miAjuda.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/ajuda.png")));
+		mOutros.add(miAjuda = new JMenuItem());
+		setJMenuItemConfig(miAjuda, "Ajuda", new ImageIcon(getClass().getClassLoader().getResource("Imagens/ajuda.png")));
 		
 		//Configuração do JMenuItem de alterar senha
-		action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				
-			}
-		};
-		action.putValue(Action.NAME, "Sobre");
-		mOutros.add(miSobre = new JMenuItem(action));
-		miSobre.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/sobre.png")));
+		mOutros.add(miSobre = new JMenuItem());
+		setJMenuItemConfig(miSobre, "Sobre", new ImageIcon(getClass().getClassLoader().getResource("Imagens/sobre.png")));
 		
+		//=============// Configurações do JFrame //=============//
 		//Configuração do Background
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int)screenSize.getHeight();
@@ -225,7 +131,7 @@ public class FramePrincipal extends JFrame
 		//new DialogLogin(this);
 	}
 	
-	public void setJMenuAction(JMenu m, String nome, int tecla, String descricao)
+	public void setJMenuConfig(JMenu m, String nome, int tecla, ImageIcon img)
 	{
 		AbstractAction action = new AbstractAction() 
 		{	
@@ -236,7 +142,21 @@ public class FramePrincipal extends JFrame
 		};
 		action.putValue(Action.NAME, nome);
 		action.putValue(Action.MNEMONIC_KEY, tecla);
-		action.putValue(Action.SHORT_DESCRIPTION, descricao);
+		action.putValue(Action.SMALL_ICON, img);
+		m.setAction(action);
+	}
+	
+	public void setJMenuItemConfig(JMenuItem m, String nome, ImageIcon img)
+	{
+		AbstractAction action = new AbstractAction() 
+		{	
+			public void actionPerformed(ActionEvent ae) 
+			{
+				
+			}
+		};
+		action.putValue(Action.NAME, nome);
+		action.putValue(Action.SMALL_ICON, img);
 		m.setAction(action);
 	}
 	
