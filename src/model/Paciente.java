@@ -7,7 +7,7 @@ public class Paciente {
 	
 	public Paciente(int id, String nome, String cpf, String dt_nasc, String est_civil, String conjuge, String endereco,
 			String bairro, String cidade, String cep, String uf, String fone, String email, String profissao,
-			String obs, boolean obito) 
+			boolean obito, String obs) 
 	{
 		this.id = id;
 		this.nome = nome;
