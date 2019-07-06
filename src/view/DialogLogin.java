@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import model.Funcionario;
+
 import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -138,7 +140,8 @@ public class DialogLogin extends JDialog {
 				{
 					//Validação com o banco
 					dl.dispose();
-					pai.setAcessoAutorizado(true);
+					pai.setUsuario(new Funcionario("123", "Jose", "cpf", "", "", "", true, 1));
+					pai.configurarJMenuBar();
 				}
 			}
 		};

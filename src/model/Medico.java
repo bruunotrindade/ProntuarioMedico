@@ -1,13 +1,9 @@
-package models;
+package model;
 
 public class Medico {
 	private int id;
 	private String crm, nome, cpf, senha, dt_nasc, especialidade;
 	
-	public Medico() {
-		
-	}
-
 	public Medico(int id, String crm, String nome, String cpf, String senha, String dt_nasc, String especialidade) {
 		this.id = id;
 		this.crm = crm;

@@ -1,13 +1,9 @@
-package models;
+package model;
 
 public class Pergunta {
 	private int id, tipo;
 	private String desc, questionario;
 	
-	public Pergunta() {
-		
-	}
-
 	public Pergunta(int id, String desc, int tipo,  String questionario) {
 		this.id = id;
 		this.tipo = tipo;

@@ -1,13 +1,9 @@
-package models;
+package model;
 
 public class Paciente {
 	private int id;
 	private String nome, cpf, dt_nasc, est_civil, conjuge, endereco, bairro, cidade, cep, uf, fone, email, profissao, obs;
 	private boolean obito;
-	
-	public Paciente() {
-		
-	}
 	
 	public Paciente(int id, String nome, String cpf, String dt_nasc, String est_civil, String conjuge, String endereco,
 			String bairro, String cidade, String cep, String uf, String fone, String email, String profissao,

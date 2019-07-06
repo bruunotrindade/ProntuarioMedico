@@ -1,14 +1,10 @@
-package models;
+package model;
 
 public class Procedimento {
 	private int id;
 	private String tipo, desc, data_hora;
 	private Consulta consulta;
 	
-	public Procedimento() {
-		
-	}
-
 	public Procedimento(int id, String tipo, String desc, String data_hora, Consulta consulta) {
 		this.id = id;
 		this.tipo = tipo;

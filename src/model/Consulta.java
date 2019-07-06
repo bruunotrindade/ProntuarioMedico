@@ -6,10 +6,6 @@ public class Consulta {
 	private Paciente paciente;
 	private Medico medico;
 	
-	public Consulta() {
-		
-	}
-
 	public Consulta(int id, String sintomas, String obs, String data_hora, Paciente paciente, Medico medico) {
 		this.id = id;
 		this.sintomas = sintomas;

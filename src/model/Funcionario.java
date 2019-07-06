@@ -1,17 +1,19 @@
-package models;
+package model;
 
 public class Funcionario {
-	private int id;
+	private int id, permissao;
 	private String matricula, nome, cpf, senha, dt_nasc, funcao;
-	private boolean ativo, permissao;
+	private boolean ativo;
 	
-	public Funcionario() {
-		
-	}
-
+	/*
+	 * Permissão:
+	 * 1 = Funcionário comum
+	 * 2 = Médico
+	 * 3 = Administrador
+	 * */
+	
 	public Funcionario(int id, String matricula, String nome, String cpf, String senha, String dt_nasc, String funcao,
-			boolean ativo, boolean permissao) {
-		super();
+			boolean ativo, int permissao) {
 		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
@@ -24,7 +26,7 @@ public class Funcionario {
 	}
 	
 	public Funcionario(String matricula, String nome, String cpf, String senha, String dt_nasc, String funcao,
-			boolean ativo, boolean permissao) {
+			boolean ativo, int permissao) {
 		this.matricula = matricula;
 		this.nome = nome;
 		this.cpf = cpf;
@@ -99,11 +101,11 @@ public class Funcionario {
 		this.ativo = ativo;
 	}
 
-	public boolean isPermissao() {
+	public int getPermissao() {
 		return permissao;
 	}
 
-	public void setPermissao(boolean permissao) {
+	public void setPermissao(int permissao) {
 		this.permissao = permissao;
 	}
 	
