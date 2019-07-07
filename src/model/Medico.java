@@ -1,34 +1,30 @@
 package model;
 
-public class Medico {
-	private int id;
-	private String crm, nome, cpf, senha, dt_nasc, especialidade;
+public class Medico extends Funcionario {
 	
-	public Medico(int id, String crm, String nome, String cpf, String senha, String dt_nasc, String especialidade) {
-		this.id = id;
+	private String crm, especialidade;
+	
+	public Medico(int id, String matricula, String nome, String cpf, String senha, String dt_nasc, String funcao,
+			boolean ativo, int permissao, String crm, String especialidade) {
+		super(id, matricula, nome, cpf, senha, dt_nasc, funcao, ativo, permissao);
 		this.crm = crm;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.senha = senha;
-		this.dt_nasc = dt_nasc;
 		this.especialidade = especialidade;
+		// TODO Auto-generated constructor stub
 	}
 	
-	public Medico(String crm, String nome, String cpf, String senha, String dt_nasc, String especialidade) {
+	public Medico(String matricula, String nome, String cpf, String senha, String dt_nasc, String funcao,
+			boolean ativo, int permissao, String crm, String especialidade) {
+		super(matricula, nome, cpf, senha, dt_nasc, funcao, ativo, permissao);
 		this.crm = crm;
-		this.nome = nome;
-		this.cpf = cpf;
-		this.senha = senha;
-		this.dt_nasc = dt_nasc;
 		this.especialidade = especialidade;
+		// TODO Auto-generated constructor stub
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
+	
+	public Medico(Funcionario f, String crm, String especialidade) {
+		super(f.getMatricula(), f.getNome(), f.getCpf(), f.getSenha(), f.getDt_nasc(), f.getFuncao(), f.isAtivo(), f.getPermissao());
+		this.crm = crm;
+		this.especialidade = especialidade;
+		// TODO Auto-generated constructor stub
 	}
 
 	public String getCrm() {
@@ -39,38 +35,6 @@ public class Medico {
 		this.crm = crm;
 	}
 
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
-
-	public String getSenha() {
-		return senha;
-	}
-
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-
-	public String getDt_nasc() {
-		return dt_nasc;
-	}
-
-	public void setDt_nasc(String dt_nasc) {
-		this.dt_nasc = dt_nasc;
-	}
-
 	public String getEspecialidade() {
 		return especialidade;
 	}
@@ -78,6 +42,4 @@ public class Medico {
 	public void setEspecialidade(String especialidade) {
 		this.especialidade = especialidade;
 	}
-	
-	
 }

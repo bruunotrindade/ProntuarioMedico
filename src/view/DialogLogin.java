@@ -11,7 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import dao.FuncionarioDao;
+import dao.MedicoDao;
 import model.Funcionario;
+import model.Medico;
 
 import java.awt.GridLayout;
 import javax.swing.JLabel;
@@ -139,8 +142,22 @@ public class DialogLogin extends JDialog {
 				else
 				{
 					//Validação com o banco
+					Funcionario f = FuncionarioDao.getFuncionarioByLogin(cpf, senha);
+					Medico m;
+					if(f == null)
+					{
+						JOptionPane.showMessageDialog(null, "CPF ou senha inválido(s)!", "Falha", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					
 					dl.dispose();
-					pai.setUsuario(new Funcionario("123", "Jose", "cpf", "", "", "", true, 1));
+					if(f.getPermissao() == 2 && (m = MedicoDao.getMedicoByFuncionario(f)) != null) 
+						pai.setUsuario(m);
+					else
+						pai.setUsuario(f);
+					
+					
+					
 					pai.configurarJMenuBar();
 				}
 			}
@@ -149,6 +166,7 @@ public class DialogLogin extends JDialog {
 		actionEntrar.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_E);
 		actionEntrar.putValue(Action.SHORT_DESCRIPTION, "Entra no sistema com as credenciais inseridas.");
 		actionEntrar.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getClassLoader().getResource("Imagens/check.png")));
+		
 		btEntrar.setBackground(Color.WHITE);
 		btEntrar.setAction(actionEntrar);
 		
@@ -165,6 +183,23 @@ public class DialogLogin extends JDialog {
 		});
 		
 		panel_2.add(btCancelar);
+		
+		//Configuração dos eventos da tecla Enter
+		tfCPF.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				pfSenha.requestFocus();
+			}
+		});
+		
+		pfSenha.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent arg0) 
+			{
+				actionEntrar.actionPerformed(null);
+			}
+		});
 		
 		setModal(true);
 		setUndecorated(true);

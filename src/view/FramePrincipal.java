@@ -7,11 +7,14 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -25,7 +28,7 @@ import javax.swing.JMenuItem;
 
 public class FramePrincipal extends JFrame 
 {
-	private JMenu mPaciente, mConsulta, mGerencia, mConta, mOutros;
+	private JMenu mPaciente, mConsulta, mGerencia, mConta, mOutros, mSair;
 	private JMenuItem miNovoPaciente, miGerenciarPacientes, miGerenciarConsultas, miAlterarAnamnese, miAlterarHistorico, miGerenciarMedicos, miGerenciarFuncionarios, miNovaConsulta, miAlterarDados, miAlterarSenha, miAjuda, miSobre;
 	private JMenuBar mbMenu;
 	private Funcionario usuario;
@@ -37,20 +40,15 @@ public class FramePrincipal extends JFrame
 	
 	public FramePrincipal() 
 	{		
-		//Configurações do JMenuBar
 		mbMenu = new JMenuBar();
-		mbMenu.setBackground(Color.WHITE);
-		mbMenu.setBorder(BorderFactory.createRaisedBevelBorder());
-		mbMenu.setBorderPainted(true);
-		mbMenu.setVisible(false);
 		
-		//=============// Configurações do JFrame //=============//
 		//Configuração do Background
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int)screenSize.getHeight();
 		
 		String urlBG = String.format("Imagens/bg%dp.png", height);
 		System.out.println(urlBG);
+		
 		//Configurações do JFrame
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -59,24 +57,15 @@ public class FramePrincipal extends JFrame
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
 		setVisible(true);
-		setJMenuBar(mbMenu);
 		setTitle("Prontuário Médico");
-		new DialogLogin(this);
+		exigirLogin();
 	}
 	
 	public void setJMenuConfig(JMenu m, String nome, int tecla, ImageIcon img)
 	{
-		AbstractAction action = new AbstractAction() 
-		{	
-			public void actionPerformed(ActionEvent ae) 
-			{
-				m.setArmed(!m.isArmed());
-			}
-		};
-		action.putValue(Action.NAME, nome);
-		action.putValue(Action.MNEMONIC_KEY, tecla);
-		action.putValue(Action.SMALL_ICON, img);
-		m.setAction(action);
+		m.setText(nome);
+		m.setMnemonic(tecla);
+		m.setIcon(img);
 	}
 	
 	public void setJMenuItemConfig(JMenuItem m, String nome, ImageIcon img)
@@ -85,7 +74,8 @@ public class FramePrincipal extends JFrame
 		{	
 			public void actionPerformed(ActionEvent ae) 
 			{
-				
+				if(m == miAlterarDados)
+					new FrameAlterarDados(FramePrincipal.this);
 			}
 		};
 		action.putValue(Action.NAME, nome);
@@ -105,12 +95,18 @@ public class FramePrincipal extends JFrame
 	
 	public void configurarJMenuBar()
 	{
+		//Configurações do JMenuBar
+		mbMenu = new JMenuBar();
+		mbMenu.setBackground(Color.WHITE);
+		mbMenu.setBorder(BorderFactory.createRaisedBevelBorder());
+		mbMenu.setBorderPainted(true);
 		mbMenu.setVisible(true);
+		setJMenuBar(mbMenu);
 		
 		//Configurações dos JMenu
 		if(usuario.getPermissao() != 2)
 		{
-			mbMenu.add(mPaciente = new JMenu("Paciente"));
+			mbMenu.add(mPaciente = new JMenu());
 			//==============// JMenu Paciente e seus itens //==============//
 			setJMenuConfig(mPaciente, "Paciente", KeyEvent.VK_P, new ImageIcon(getClass().getClassLoader().getResource("Imagens/paciente.png")));
 			
@@ -126,7 +122,7 @@ public class FramePrincipal extends JFrame
 		//==============// JMenu Consulta e seus itens //==============//
 		if(usuario.getPermissao() != 1)
 		{
-			mbMenu.add(mConsulta = new JMenu("Consulta"));
+			mbMenu.add(mConsulta = new JMenu());
 			setJMenuConfig(mConsulta, "Consulta", KeyEvent.VK_C, new ImageIcon(getClass().getClassLoader().getResource("Imagens/consulta.png")));
 			
 			//Configuração do JMenuItem de gerenciar consultas
@@ -141,7 +137,7 @@ public class FramePrincipal extends JFrame
 		//==============// JMenu Gerência e seus itens //==============//
 		if(usuario.getPermissao() == 3)
 		{
-			mbMenu.add(mGerencia = new JMenu("Gerência"));
+			mbMenu.add(mGerencia = new JMenu());
 			setJMenuConfig(mGerencia, "Gerência", KeyEvent.VK_G, new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia.png")));	
 	
 			//Configuração do JMenuItem de gerenciar funcionários
@@ -163,7 +159,7 @@ public class FramePrincipal extends JFrame
 		}
 		
 		//==============// JMenu Conta e seus itens //==============//
-		mbMenu.add(mConta = new JMenu("Conta"));
+		mbMenu.add(mConta = new JMenu());
 		setJMenuConfig(mConta, "Conta", KeyEvent.VK_O, new ImageIcon(getClass().getClassLoader().getResource("Imagens/conta.png")));
 		
 		//Configuração do JMenuItem de alterar dados da conta
@@ -175,7 +171,7 @@ public class FramePrincipal extends JFrame
 		setJMenuItemConfig(miAlterarSenha, "Alterar senha", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_senha.png")));
 		
 		//==============// JMenu Outros e seus itens //==============//
-		mbMenu.add(mOutros = new JMenu("Outros"));
+		mbMenu.add(mOutros = new JMenu());
 		setJMenuConfig(mOutros, "Outros", 0, new ImageIcon(getClass().getClassLoader().getResource("Imagens/outros.png")));
 		
 		//Configuração do JMenuItem de ajuda
@@ -185,5 +181,28 @@ public class FramePrincipal extends JFrame
 		//Configuração do JMenuItem de alterar senha
 		mOutros.add(miSobre = new JMenuItem());
 		setJMenuItemConfig(miSobre, "Sobre", new ImageIcon(getClass().getClassLoader().getResource("Imagens/sobre.png")));
+		
+		//==============// JMenu Sair //==============//
+		mbMenu.add(mSair = new JMenu());
+		setJMenuConfig(mSair, "Sair", 0, new ImageIcon(getClass().getClassLoader().getResource("Imagens/sair.png")));
+		mSair.addMouseListener(new MouseListener() 
+		{
+			public void mouseClicked(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) 
+			{
+				exigirLogin();
+			}
+		});
+	}
+	
+	public void exigirLogin()
+	{
+		mbMenu.setVisible(false);
+		usuario = null;
+		setJMenuBar(null);
+		new DialogLogin(this);
 	}
 }

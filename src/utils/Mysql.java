@@ -1,4 +1,4 @@
-package sql;
+package utils;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -26,7 +26,8 @@ public class Mysql
 		}
 		catch(Exception e)
 		{
-			System.out.println("Deu merd*");
+			System.out.println("Falha");
+			System.exit(1);
 		}
     }
     
@@ -40,8 +41,7 @@ public class Mysql
 		}
     	catch(SQLException sqle)
 		{
-    		System.out.println("KU");
-			System.out.printf("Erro fedepe: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
+			System.out.printf("Erro: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
 			return false;
 		}
     }
@@ -104,7 +104,7 @@ public class Mysql
 		}
     	catch(SQLException sqle)
 		{
-			System.out.printf("Erro dadisgraça: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
+			System.out.printf("Erro: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
 		}
         return null;
     }
@@ -127,7 +127,7 @@ public class Mysql
 		}
     	catch(SQLException sqle)
 		{
-			System.out.printf("Erro dadisgraça: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
+			System.out.printf("Erro: #%d [%s]\n", sqle.getErrorCode(), sqle.getMessage());
 		}
         return null;
     }
