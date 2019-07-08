@@ -11,6 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+
+
 import model.Funcionario;
 
 import java.awt.GridLayout;
@@ -48,12 +50,14 @@ public class DialogLogin extends JDialog {
 	{
 		this.pai = pai;
 		
+		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setVgap(20);
 		contentPanel.add(panel_1);
+		panel_1.setBackground(new Color(175, 238, 238));
 		
 		JLabel lbLogin = new JLabel("Acesso ao Sistema");
 		lbLogin.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -67,6 +71,8 @@ public class DialogLogin extends JDialog {
 		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
+	
+		panel.setBackground(new Color(175, 238, 238));
 		
 		JLabel lbCPF = new JLabel("CPF:");
 		GridBagConstraints gbc_lbCPF = new GridBagConstraints();
@@ -109,11 +115,13 @@ public class DialogLogin extends JDialog {
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
+		contentPanel.setBackground(new Color(175, 238, 238));
 		
 		JPanel panel_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
 		flowLayout_1.setVgap(30);
 		contentPanel.add(panel_2);
+		panel_2.setBackground(new Color(175, 238, 238));
 		
 		//Evento para evitar que burlem o JDialog
 		addWindowListener(new WindowAdapter()
@@ -140,7 +148,7 @@ public class DialogLogin extends JDialog {
 				{
 					//Validação com o banco
 					dl.dispose();
-					pai.setUsuario(new Funcionario("123", "Jose", "cpf", "", "", "", true, 1));
+					pai.setUsuario(new Funcionario("123", "Jose", "cpf", "", "", "", true, 3));
 					pai.configurarJMenuBar();
 				}
 			}
@@ -148,13 +156,13 @@ public class DialogLogin extends JDialog {
 		actionEntrar.putValue(Action.NAME, "Entrar");
 		actionEntrar.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_E);
 		actionEntrar.putValue(Action.SHORT_DESCRIPTION, "Entra no sistema com as credenciais inseridas.");
-		actionEntrar.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getClassLoader().getResource("Imagens/check.png")));
+		actionEntrar.putValue(Action.SMALL_ICON, new ImageIcon(getClass().getClassLoader().getResource("Imagens/confirmar2.png")));
 		btEntrar.setBackground(Color.WHITE);
 		btEntrar.setAction(actionEntrar);
 		
 		//Configuração do JButton de cancelar
 		JButton btCancelar = new JButton("Cancelar");
-		btCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		btCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel2.png")));
 		btCancelar.setBackground(Color.WHITE);
 		btCancelar.addActionListener(new ActionListener()
 		{
