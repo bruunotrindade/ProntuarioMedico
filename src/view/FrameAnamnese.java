@@ -1,5 +1,4 @@
-
-package aluno;
+package view;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,18 +8,16 @@ import java.awt.GridLayout;
 
 import javax.swing.*;
 
-public class AnamneseFrame {
+public class FrameAnamnese 
+{
 	JFrame frame;
-	
 	JPanel pcol1, pcol2, pcol3, pcols, pot1, pot2;
-	
 	JRadioButton bt21, bt22, bt31, bt32, bt41, bt42;
-	
 	ButtonGroup bg2, bg3, bg4;
-	
 	JTextField tfdoencas, tfalergias;
 	
-	public AnamneseFrame() {
+	public FrameAnamnese() 
+	{
 		frame = new JFrame("Anamnese");
 		tfalergias = new JTextField(23);
 		tfdoencas = new JTextField(15);
@@ -75,9 +72,4 @@ public class AnamneseFrame {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);		
 	}
-	
-	public static void main(String[] args) {
-		new AnamneseFrame();
-	}
-
 }

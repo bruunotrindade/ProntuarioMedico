@@ -46,7 +46,7 @@ public class FramePrincipal extends JFrame
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int)screenSize.getHeight();
 		
-		String urlBG = String.format("Imagens/bg%dp.png", height);
+		String urlBG = String.format("Imagens/bg%dp.jpg", height);
 		System.out.println(urlBG);
 		
 		//Configurações do JFrame
@@ -112,11 +112,11 @@ public class FramePrincipal extends JFrame
 			
 			//Configuração do JMenuItem de gerenciar consultas
 			mPaciente.add(miNovoPaciente = new JMenuItem());
-			setJMenuItemConfig(miNovoPaciente, "Novo paciente", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+			setJMenuItemConfig(miNovoPaciente, "Novo paciente", new ImageIcon(getClass().getClassLoader().getResource("Imagens/novo_paciente.png")));
 			
 			//Configuração do JMenuItem de gerenciar consultas
 			mPaciente.add(miGerenciarPacientes = new JMenuItem());
-			setJMenuItemConfig(miGerenciarPacientes, "Gerenciar pacientes", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+			setJMenuItemConfig(miGerenciarPacientes, "Gerenciar pacientes", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerenciar_paciente.png")));
 		}
 		
 		//==============// JMenu Consulta e seus itens //==============//
@@ -127,11 +127,11 @@ public class FramePrincipal extends JFrame
 			
 			//Configuração do JMenuItem de gerenciar consultas
 			mConsulta.add(miNovaConsulta = new JMenuItem());
-			setJMenuItemConfig(miNovaConsulta, "Nova consulta", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+			setJMenuItemConfig(miNovaConsulta, "Nova consulta", new ImageIcon(getClass().getClassLoader().getResource("Imagens/nova_consulta.png")));
 			
 			//Configuração do JMenuItem de gerenciar consultas
 			mConsulta.add(miGerenciarConsultas = new JMenuItem());
-			setJMenuItemConfig(miGerenciarConsultas, "Gerenciar consultas", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerencia_medico.png")));
+			setJMenuItemConfig(miGerenciarConsultas, "Gerenciar consultas", new ImageIcon(getClass().getClassLoader().getResource("Imagens/gerenciar_consulta.png")));
 		}
 		
 		//==============// JMenu Gerência e seus itens //==============//
@@ -164,7 +164,7 @@ public class FramePrincipal extends JFrame
 		
 		//Configuração do JMenuItem de alterar dados da conta
 		mConta.add(miAlterarDados = new JMenuItem());
-		setJMenuItemConfig(miAlterarDados, "Alterar dados", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_senha.png")));
+		setJMenuItemConfig(miAlterarDados, "Alterar dados", new ImageIcon(getClass().getClassLoader().getResource("Imagens/alterar_dados.png")));
 		
 		//Configuração do JMenuItem de alterar senha
 		mConta.add(miAlterarSenha = new JMenuItem());
