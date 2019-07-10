@@ -15,8 +15,8 @@ import dao.FuncionarioDao;
 import dao.MedicoDao;
 import model.Funcionario;
 import model.Medico;
+import utils.Funcoes;
 
-import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -25,14 +25,11 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import javax.swing.UIManager;
 import java.awt.Color;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -57,7 +54,6 @@ public class DialogLogin extends JDialog
 		FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 		flowLayout.setVgap(20);
 		contentPanel.add(panel_1);
-		panel_1.setBackground(new Color(175, 238, 238));
 		
 		JLabel lbLogin = new JLabel("Acesso ao Sistema");
 		lbLogin.setFont(new Font("Dialog", Font.BOLD, 18));
@@ -72,8 +68,6 @@ public class DialogLogin extends JDialog
 		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		panel.setLayout(gbl_panel);
 	
-		panel.setBackground(new Color(175, 238, 238));
-		
 		JLabel lbCPF = new JLabel("CPF:");
 		GridBagConstraints gbc_lbCPF = new GridBagConstraints();
 		gbc_lbCPF.fill = GridBagConstraints.BOTH;
@@ -115,13 +109,11 @@ public class DialogLogin extends JDialog
 		getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel);
-		contentPanel.setBackground(new Color(175, 238, 238));
 		
 		JPanel panel_2 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_2.getLayout();
 		flowLayout_1.setVgap(30);
 		contentPanel.add(panel_2);
-		panel_2.setBackground(new Color(175, 238, 238));
 		
 		//Evento para evitar que burlem o JDialog
 		addWindowListener(new WindowAdapter()
@@ -143,25 +135,24 @@ public class DialogLogin extends JDialog
 				DialogLogin dl = DialogLogin.this;
 				String cpf = dl.tfCPF.getText(), senha = new String(dl.pfSenha.getPassword());
 				if(cpf.contains(" ") || senha.length() == 0)
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos", "Falha", JOptionPane.ERROR_MESSAGE);
+					Funcoes.mostrarMensagemErro("Preencha todos os campos");
 				else
 				{
 					//Validação com o banco
 					Funcionario f = FuncionarioDao.getFuncionarioByLogin(cpf, senha);
 					Medico m;
 					if(f == null)
-					{
-						JOptionPane.showMessageDialog(null, "CPF ou senha inválido(s)!", "Falha", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					
-					dl.dispose();
-					if(f.getPermissao() == 2 && (m = MedicoDao.getMedicoByFuncionario(f)) != null) 
-						pai.setUsuario(m);
+						Funcoes.mostrarMensagemErro("CPF ou senha inválido(s)!");
 					else
-						pai.setUsuario(f);
-
-					pai.configurarJMenuBar();
+					{
+						dl.dispose();
+						if(f.getPermissao() == 2 && (m = MedicoDao.getMedicoByFuncionario(f)) != null) 
+							pai.setUsuario(m);
+						else
+							pai.setUsuario(f);
+						
+						pai.configurarJMenuBar();
+					}
 				}
 			}
 		};

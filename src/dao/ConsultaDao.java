@@ -1,5 +1,6 @@
 package dao;
 
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -57,8 +58,8 @@ public class ConsultaDao extends Dao {
 			ArrayList<HashMap<String, Object>> resultado = mysql.fetch_assoc_all();
 			
 			for(HashMap<String,Object> r : resultado) {
-				Consulta p = new Consulta((int) r.get("ID"), (String) r.get("SINTOMAS"),(String) r.get("OBSERVACOES"),(String) r.get("DATA_HORA"),
-						(int) r.get("PACIENTE_ID"), (int)r.get("MEDICO_ID"));
+				Consulta p = new Consulta((int) r.get("ID"), (String) r.get("SINTOMAS"),(String) r.get("OBSERVACOES"),(String) r.get("DATA_HORA").toString(),
+						PacienteDao.getPaciente((int)r.get("PACIENTE_ID")), MedicoDao.getMedico((int)r.get("MEDICO_ID")));
 				ps.add(p);
 			}
 			

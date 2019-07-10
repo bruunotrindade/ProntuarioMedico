@@ -1,16 +1,13 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.border.TitledBorder;
-import javax.swing.text.DateFormatter;
 import javax.swing.text.MaskFormatter;
 
 import dao.FuncionarioDao;
@@ -24,9 +21,6 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.awt.GridLayout;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
@@ -35,8 +29,6 @@ import javax.swing.JFormattedTextField;
 import java.awt.Color;
 import javax.swing.ImageIcon;
 import java.awt.Font;
-import javax.swing.UIManager;
-import javax.swing.border.CompoundBorder;
 
 public class FrameAlterarDados extends JFrame {
 
@@ -237,29 +229,27 @@ public class FrameAlterarDados extends JFrame {
 				String nomeCompleto = tfNomeCompleto.getText(), cpf = tfCPF.getText(), dtNasc = Funcoes.converterDataEUA(tfDtNasc.getText()), matricula = tfMatricula.getText(), funcao = tfFuncao.getText(), senha = new String(pfSenha.getPassword());
 			
 				if(nomeCompleto.length() == 0 || cpf.contains(" ") || matricula.length() == 0 || senha.length() == 0)
+					Funcoes.mostrarMensagemErro("Preencha todos os campos obrigatórios (*)!");
+				else
 				{
-					JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios (*)!", "Falha", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				Funcionario f;
-				if((f = FuncionarioDao.getFuncionarioByLogin(cpf, senha)) == null)
-				{
-					JOptionPane.showMessageDialog(null, "Senha inválida!", "Falha", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				f.setNome(nomeCompleto);
-				f.setCpf(cpf);
-				f.setDt_nasc(dtNasc);
-				f.setMatricula(matricula);
-				f.setFuncao(funcao);
-				
-				if(FuncionarioDao.update(f))
-				{
-					JOptionPane.showMessageDialog(null, "Dados atualizados com sucesso!", "Alteração de Dados", JOptionPane.INFORMATION_MESSAGE);
-					pai.setUsuario(f);
-					FrameAlterarDados.this.dispose();
+					Funcionario f;
+					if((f = FuncionarioDao.getFuncionarioByLogin(cpf, senha)) == null)
+						Funcoes.mostrarMensagemErro("Senha inválida!");
+					else
+					{
+						f.setNome(nomeCompleto);
+						f.setCpf(cpf);
+						f.setDt_nasc(dtNasc);
+						f.setMatricula(matricula);
+						f.setFuncao(funcao);
+						
+						if(FuncionarioDao.update(f))
+						{
+							Funcoes.mostrarMensagemSucesso("Dados atualizados com sucesso!");
+							pai.setUsuario(f);
+							FrameAlterarDados.this.dispose();
+						}
+					}
 				}
 			}
 		});

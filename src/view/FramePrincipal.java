@@ -45,8 +45,10 @@ public class FramePrincipal extends JFrame
 		//Configuração do Background
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int height = (int)screenSize.getHeight();
+		if(height != 1080 && height != 720 && height != 768 && height != 900)
+			height = 1080;
 		
-		String urlBG = String.format("Imagens/bg%dp.jpg", height);
+		String urlBG = String.format("Imagens/bg%dp.png", height);
 		System.out.println(urlBG);
 		
 		//Configurações do JFrame
@@ -76,6 +78,12 @@ public class FramePrincipal extends JFrame
 			{
 				if(m == miAlterarDados)
 					new FrameAlterarDados(FramePrincipal.this);
+				else if(m == miAlterarSenha)
+					new FrameAlterarSenha(FramePrincipal.this);
+				else if(m == miGerenciarConsultas)
+					new FrameGerenciarConsulta(FramePrincipal.this);
+				else if(m == miGerenciarPacientes)
+					new FrameGerenciarPaciente(FramePrincipal.this);
 			}
 		};
 		action.putValue(Action.NAME, nome);

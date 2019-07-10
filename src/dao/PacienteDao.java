@@ -61,7 +61,7 @@ public class PacienteDao extends Dao {
 				Paciente paciente = new Paciente((int) r.get("ID"), (String) r.get("NOME"), (String) r.get("CPF"), (String) r.get("DT_NASCIMENTO").toString(),
 						(String) r.get("ESTADO_CIVIL"), (String) r.get("CONJUGE"), (String) r.get("ENDERECO"), (String) r.get("BAIRRO"),
 						(String) r.get("CIDADE"), (String) r.get("CEP"), (String) r.get("UF"), (String) r.get("FONE"), (String) r.get("EMAIL"),
-						(String) r.get("PROFISSAO"), (boolean) r.get("OBITO"), (String) r.get("OBS"));
+						(String) r.get("PROFISSAO"), (boolean) r.get("OBITO").equals("S"), (String) r.get("OBS"));
 				pacientes.add(paciente);
 			}
 			
