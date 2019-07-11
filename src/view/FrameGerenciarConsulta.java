@@ -88,7 +88,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 			}
 		});
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Gerenciamento de Consultas");
 		pack();
 		setLocationRelativeTo(null);

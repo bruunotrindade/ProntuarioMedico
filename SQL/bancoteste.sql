@@ -18,6 +18,7 @@
 --
 -- Table structure for table `consultas`
 --
+use `prontuario`;
 
 DROP TABLE IF EXISTS `consultas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
