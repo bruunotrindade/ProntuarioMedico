@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -52,15 +53,27 @@ public class FramePrincipal extends JFrame
 		System.out.println(urlBG);
 		
 		//Configurações do JFrame
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
-		setLayout(new BorderLayout());
-		add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(urlBG))));
-		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		setResizable(false);
-		setVisible(true);
 		setTitle("Prontuário Médico");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		parcialFullScreen();
+		setLayout(new BorderLayout());
+		add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(urlBG))));	
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		toFront();
+		setVisible(true);
+		setResizable(false);
 		exigirLogin();
+	}
+	
+	public void parcialFullScreen() {
+		Insets in = Toolkit.getDefaultToolkit().getScreenInsets(this.getGraphicsConfiguration());
+
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+
+		int width = d.width-(in.left + in.top);
+		int height = d.height-(in.top + in.bottom);
+		setSize(width,height);
+		setLocation(in.left,in.top);
 	}
 	
 	public void setJMenuConfig(JMenu m, String nome, int tecla, ImageIcon img)
