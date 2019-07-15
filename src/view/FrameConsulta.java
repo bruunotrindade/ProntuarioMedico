@@ -15,7 +15,6 @@ import javax.swing.border.TitledBorder;
 import dao.ConsultaDao;
 import dao.PacienteDao;
 import dao.ProcedimentoDao;
-
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
@@ -31,10 +30,12 @@ import javax.swing.JTextArea;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
+
 import model.Procedimento;
 import model.Consulta;
 import model.Medico;
 import model.Paciente;
+
 public class FrameConsulta {
 
 	private JFrame frmConsulta;
@@ -43,22 +44,6 @@ public class FrameConsulta {
 	private JTextField tfNascimento;
 	private JTextField tfDescricao;
 	private FramePrincipal pai;
-	
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrameConsulta window = new FrameConsulta();
-					window.frmConsulta.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
 
 	class ProcedimentoGUI
 	{
@@ -155,6 +140,7 @@ public class FrameConsulta {
 		
 		JScrollPane scpProced = new JScrollPane(pnProcedimentos, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		frmConsulta.add(scpProced); 
+
 		JPanel pnProceds = new JPanel();
 		pnProcedimentos.add(pnProceds);
 		
@@ -221,7 +207,7 @@ public class FrameConsulta {
 			public void actionPerformed(ActionEvent e) {
 				JPanel pnovo = new JPanel();
 				JLabel lbNovo = new JLabel("Descrição:");
-				
+
 				ProcedimentoGUI p = new ProcedimentoGUI();
 				pnovo.add(lbNovo);
 	
