@@ -139,7 +139,8 @@ public class FrameConsulta {
 		pnProcedimentos.setLayout(new BoxLayout(pnProcedimentos, BoxLayout.PAGE_AXIS));
 		
 		JScrollPane scpProced = new JScrollPane(pnProcedimentos, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		frmConsulta.add(scpProced); 
+
+		pnDados.add(scpProced);
 
 		JPanel pnProceds = new JPanel();
 		pnProcedimentos.add(pnProceds);
@@ -173,7 +174,7 @@ public class FrameConsulta {
 		pnProceds.add(lbX);
 		
 		JPanel pnButoes = new JPanel();
-		frmConsulta.getContentPane().add(pnButoes);
+		pnDados.add(pnButoes);
 		
 		JButton btnSalvar = new JButton("Salvar");
 		pnButoes.add(btnSalvar);
@@ -182,7 +183,6 @@ public class FrameConsulta {
 		pnButoes.add(btNovo);
 		
 		ArrayList<ProcedimentoGUI> procs = new ArrayList<ProcedimentoGUI>();
-		
 		btnSalvar.addActionListener(new ActionListener() {
 
 			public void actionPerformed(ActionEvent e) {
@@ -196,7 +196,7 @@ public class FrameConsulta {
 				for(ProcedimentoGUI p : procs)
 				{
 					Procedimento proced = new Procedimento(p.cbNovo.getSelectedItem().toString(), p.tfNovo.getText(), "", consu);
-					ProcedimentoDao.insert(proced);
+					//ProcedimentoDao.insert(proced);
 				}
 			}
 		});
@@ -255,6 +255,8 @@ public class FrameConsulta {
 			}
 		});
 		pnButoes.add(btSair);
+		
+		frmConsulta.setVisible(true);
 	}
 
 }
