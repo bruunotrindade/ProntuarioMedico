@@ -97,6 +97,8 @@ public class FramePrincipal extends JFrame
 					new FrameGerenciarConsulta(FramePrincipal.this);
 				else if(m == miGerenciarPacientes)
 					new FrameGerenciarPaciente(FramePrincipal.this);
+				else if(m == miNovaConsulta)
+					new FrameConsulta(FramePrincipal.this);
 			}
 		};
 		action.putValue(Action.NAME, nome);
