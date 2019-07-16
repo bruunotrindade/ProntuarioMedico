@@ -196,7 +196,7 @@ public class FrameConsulta {
 				for(ProcedimentoGUI p : procs)
 				{
 					Procedimento proced = new Procedimento(p.cbNovo.getSelectedItem().toString(), p.tfNovo.getText(), "", consu);
-					//ProcedimentoDao.insert(proced);
+					ProcedimentoDao.insert(proced);
 				}
 			}
 		});

@@ -12,7 +12,7 @@ public class FuncionarioDao extends Dao {
 	public static boolean insert(Funcionario p) {
 		if(p != null) {
 			return mysql.query("INSERT INTO funcionarios VALUES (DEFAULT, '"+p.getMatricula()+"','" + p.getNome() + "','"+p.getCpf()+"','"+p.getSenha()+
-					"','"+p.getDt_nasc()+"','"+p.getFuncao()+"','"+p.isAtivo()+"',"+p.getPermissao()+")");	
+					"','"+p.getDt_nasc()+"','"+p.getFuncao()+"','"+(p.isAtivo() ? 'S':'N')+"',"+p.getPermissao()+")");	
 		}
 		return false;
 	}

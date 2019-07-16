@@ -69,7 +69,9 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				int ind = table.getSelectedRow();
+				Funcionario f = (Funcionario) tbModel.getValue(ind);
+				new FrameCadastroFuncionario(f,0);
 			}
 		});
 		
@@ -79,8 +81,8 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		btVisualizar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
-			{
-				
+			{	
+				new FrameCadastroFuncionario();
 			}
 		});
 		
