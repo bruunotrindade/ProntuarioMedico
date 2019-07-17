@@ -12,8 +12,10 @@ public class MedicoDao extends Dao {
 
 	public static boolean insert(Medico p) {
 		if (p != null) {
-			return mysql.query("INSERT INTO medicos VALUES (DEFAULT, '" + p.getCrm() + "','" + p.getEspecialidade() + "', '"
-					+ p.getId() + "')");
+			String query = "INSERT INTO medicos VALUES (DEFAULT, '" + p.getCrm() + "','" + p.getEspecialidade() + "', '"
+					+ p.getId() + "')";
+			System.out.println(query);
+			return mysql.query(query);
 		}
 		return false;
 	}
@@ -22,7 +24,7 @@ public class MedicoDao extends Dao {
 		if (p != null) {
 
 			return mysql.query("UPDATE medicos SET CRM='" + p.getCrm() + "', ESPECIALIDADE='" + p.getEspecialidade()
-					+ "' WHERE ID=" + p.getId());
+					+ "' WHERE FUNCIONARIO_ID=" + p.getId());
 		}
 		return false;
 	}

@@ -21,7 +21,7 @@ public class Medico extends Funcionario {
 	}
 	
 	public Medico(Funcionario f, String crm, String especialidade) {
-		super(f.getMatricula(), f.getNome(), f.getCpf(), f.getSenha(), f.getDt_nasc(), f.getFuncao(), f.isAtivo(), f.getPermissao());
+		super(f.getId(), f.getMatricula(), f.getNome(), f.getCpf(), f.getSenha(), f.getDt_nasc(), f.getFuncao(), f.isAtivo(), f.getPermissao());
 		this.crm = crm;
 		this.especialidade = especialidade;
 		// TODO Auto-generated constructor stub

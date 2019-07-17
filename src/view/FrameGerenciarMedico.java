@@ -21,13 +21,15 @@ import tbmodel.PacienteTableModel;
 
 public class FrameGerenciarMedico extends FrameGerenciar{
 
+	MedicoTableModel tbModel;
+	
 	public FrameGerenciarMedico(FramePrincipal pai) {
 		super(pai);
 		
 		String radioButtons[] = {"Código", "CRM", "Matricula", "Nome", "CPF", "Nascimento", "Função", "Especialidade", "Desativados", "Todos"};
 		ButtonGroup bg = preencherOpcoesConsulta(radioButtons);
 		
-		MedicoTableModel tbModel = new MedicoTableModel(MedicoDao.getAll());
+		tbModel = new MedicoTableModel(MedicoDao.getAll());
 		table.setModel(tbModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,7 +74,9 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				int ind = table.getSelectedRow();
+				Medico f = (Medico) tbModel.getValue(ind);
+				new FrameCadastroMedico(FrameGerenciarMedico.this,f);
 			}
 		});
 		
@@ -84,6 +88,7 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				
+				new FrameCadastroMedico(FrameGerenciarMedico.this);
 			}
 		});
 		
