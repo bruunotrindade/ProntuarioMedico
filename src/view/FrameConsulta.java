@@ -51,7 +51,8 @@ public class FrameConsulta {
 		JComboBox cbNovo = new JComboBox();
 	}
 	
-	public FrameConsulta(FramePrincipal pai) {
+	public FrameConsulta(FramePrincipal pai) 
+	{
 		this.pai = pai;
 		frmConsulta = new JFrame();
 		frmConsulta.setTitle("Consulta");

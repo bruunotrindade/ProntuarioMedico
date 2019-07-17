@@ -55,7 +55,7 @@ public class FramePrincipal extends JFrame
 		//Configurações do JFrame
 		setTitle("Prontuário Médico");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		parcialFullScreen();
+		//parcialFullScreen();
 		setLayout(new BorderLayout());
 		add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(urlBG))));	
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -65,7 +65,7 @@ public class FramePrincipal extends JFrame
 		exigirLogin();
 	}
 	
-	public void parcialFullScreen() {
+	/*public void parcialFullScreen() {
 		Insets in = Toolkit.getDefaultToolkit().getScreenInsets(this.getGraphicsConfiguration());
 
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
@@ -74,7 +74,7 @@ public class FramePrincipal extends JFrame
 		int height = d.height-(in.top + in.bottom);
 		setSize(width,height);
 		setLocation(in.left,in.top);
-	}
+	}*/
 	
 	public void setJMenuConfig(JMenu m, String nome, int tecla, ImageIcon img)
 	{
@@ -99,6 +99,14 @@ public class FramePrincipal extends JFrame
 					new FrameGerenciarPaciente(FramePrincipal.this);
 				else if(m == miNovaConsulta)
 					new FrameConsulta(FramePrincipal.this);
+				else if(m == miAlterarAnamnese)
+					new FrameQuestoesAnamnese(FramePrincipal.this);
+				else if(m == miAlterarHistorico)
+					new FrameQuestoesHistorico(FramePrincipal.this);
+				else if(m == miGerenciarMedicos)
+					new FrameGerenciarMedico(FramePrincipal.this);
+				else if(m == miGerenciarFuncionarios)
+					new FrameGerenciarFuncionario(FramePrincipal.this);
 			}
 		};
 		action.putValue(Action.NAME, nome);

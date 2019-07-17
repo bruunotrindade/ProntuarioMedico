@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -78,7 +79,8 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		});
 		
 		btVisualizar.setText("Novo");
-		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo_paciente.png")));
+		btVisualizar.setMnemonic(KeyEvent.VK_N);
+		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo.png")));
 		btVisualizar.setEnabled(true);
 		btVisualizar.addActionListener(new ActionListener() 
 		{
@@ -106,9 +108,4 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		setVisible(true);
 		setResizable(false);
 	}
-
-	public static void main(String[] args) {
-		new FrameGerenciarFuncionario(null);
-	}
-
 }
