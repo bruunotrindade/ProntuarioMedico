@@ -40,7 +40,7 @@ import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 
-public class FrameQuestoesAnamnese extends JFrame 
+public class FrameQuestoesHistorico extends JFrame 
 {
 	private JPanel contentPane;
 	private JTextField textField;
@@ -57,7 +57,7 @@ public class FrameQuestoesAnamnese extends JFrame
 		JLabel lbX = new JLabel("X");
 	}
 	
-	public FrameQuestoesAnamnese(FramePrincipal pai) 
+	public FrameQuestoesHistorico(FramePrincipal pai) 
 	{
 		this.pai = pai;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -71,14 +71,14 @@ public class FrameQuestoesAnamnese extends JFrame
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_1 = new JPanel();
-		JLabel lblPerguntasExistentesNa = new JLabel("Perguntas da Anamnese");
+		JLabel lblPerguntasExistentesNa = new JLabel("Perguntas do Histórico Familiar");
 		panel_1.add(lblPerguntasExistentesNa);
 		panel.add(panel_1, BorderLayout.NORTH);
 		
 		lblPerguntasExistentesNa.setHorizontalAlignment(SwingConstants.CENTER);
 
 		//Criando as perguntas que já existem
-		perguntas = (ArrayList<Pergunta>) PerguntaDao.getBy("QUESTIONARIO", "A");
+		perguntas = (ArrayList<Pergunta>) PerguntaDao.getBy("QUESTIONARIO", "H");
 		for(Pergunta p : perguntas)
 		{
 			PerguntaGUI pGUI = new PerguntaGUI();
@@ -108,7 +108,7 @@ public class FrameQuestoesAnamnese extends JFrame
 					String descricao = p.tfDescricao.getText();
 					int tipo = p.cbTipo.getSelectedIndex();
 					if(descricao.length() > 0)
-						novas.add(new Pergunta(descricao, tipo, "A"));
+						novas.add(new Pergunta(descricao, tipo, "H"));
 				}
 				
 				//Excluindo as perguntas antigas
@@ -119,8 +119,8 @@ public class FrameQuestoesAnamnese extends JFrame
 				for(Pergunta pergunta : novas)
 					PerguntaDao.insert(pergunta);
 				
-				Funcoes.mostrarMensagemSucesso("Perguntas de Anamnese atualizadas com sucesso!");
-				FrameQuestoesAnamnese.this.dispose();
+				Funcoes.mostrarMensagemSucesso("Perguntas do Histórico Familiar atualizadas com sucesso!");
+				FrameQuestoesHistorico.this.dispose();
 			}
 		});
 		panel_3.add(btSalvar);
@@ -142,7 +142,7 @@ public class FrameQuestoesAnamnese extends JFrame
 		});
 		panel_3.add(btNovaPergunta);
 		
-		setTitle("Questões da Anamnese");
+		setTitle("Questões da Histórico Familiar");
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
@@ -236,8 +236,8 @@ public class FrameQuestoesAnamnese extends JFrame
 		scPerguntas = new JScrollPane(panelSC, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 
 		contentPane.add(scPerguntas, BorderLayout.CENTER);
-		FrameQuestoesAnamnese.this.revalidate();
-		FrameQuestoesAnamnese.this.repaint();
+		FrameQuestoesHistorico.this.revalidate();
+		FrameQuestoesHistorico.this.repaint();
 	}
 
 }

@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -17,14 +18,16 @@ import tbmodel.FuncionarioTableModel;
 import tbmodel.PacienteTableModel;
 
 public class FrameGerenciarFuncionario extends FrameGerenciar{
-
+	
+	protected FuncionarioTableModel tbModel;
+	
 	public FrameGerenciarFuncionario(FramePrincipal pai) {
 		super(pai);
 		
 		String radioButtons[] = {"Código", "Matrícula", "Nome", "CPF", "Nascimento", "Funcao", "Desativos", "Todos"};
 		ButtonGroup bg = preencherOpcoesConsulta(radioButtons);
 		
-		FuncionarioTableModel tbModel = new FuncionarioTableModel(FuncionarioDao.getAll());
+		tbModel = new FuncionarioTableModel(FuncionarioDao.getAll());
 		table.setModel(tbModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -71,18 +74,19 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 			{
 				int ind = table.getSelectedRow();
 				Funcionario f = (Funcionario) tbModel.getValue(ind);
-				new FrameCadastroFuncionario(f,0);
+				new FrameCadastroFuncionario(FrameGerenciarFuncionario.this,f);
 			}
 		});
 		
 		btVisualizar.setText("Novo");
-		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo_paciente.png")));
+		btVisualizar.setMnemonic(KeyEvent.VK_N);
+		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo.png")));
 		btVisualizar.setEnabled(true);
 		btVisualizar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{	
-				new FrameCadastroFuncionario();
+				new FrameCadastroFuncionario(FrameGerenciarFuncionario.this);
 			}
 		});
 		
@@ -104,9 +108,4 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		setVisible(true);
 		setResizable(false);
 	}
-
-	public static void main(String[] args) {
-		new FrameGerenciarFuncionario(null);
-	}
-
 }

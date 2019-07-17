@@ -2,6 +2,7 @@ package view;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -21,13 +22,15 @@ import tbmodel.PacienteTableModel;
 
 public class FrameGerenciarMedico extends FrameGerenciar{
 
+	MedicoTableModel tbModel;
+	
 	public FrameGerenciarMedico(FramePrincipal pai) {
 		super(pai);
 		
 		String radioButtons[] = {"Código", "CRM", "Matricula", "Nome", "CPF", "Nascimento", "Função", "Especialidade", "Desativados", "Todos"};
 		ButtonGroup bg = preencherOpcoesConsulta(radioButtons);
 		
-		MedicoTableModel tbModel = new MedicoTableModel(MedicoDao.getAll());
+		tbModel = new MedicoTableModel(MedicoDao.getAll());
 		table.setModel(tbModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -72,18 +75,22 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				int ind = table.getSelectedRow();
+				Medico f = (Medico) tbModel.getValue(ind);
+				new FrameCadastroMedico(FrameGerenciarMedico.this,f);
 			}
 		});
 		
 		btVisualizar.setText("Novo");
-		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo_paciente.png")));
+		btVisualizar.setMnemonic(KeyEvent.VK_N);
+		btVisualizar.setIcon(new ImageIcon(FrameGerenciar.class.getResource("/Imagens/novo.png")));
 		btVisualizar.setEnabled(true);
 		btVisualizar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				
+				new FrameCadastroMedico(FrameGerenciarMedico.this);
 			}
 		});
 		
@@ -105,9 +112,4 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 		setVisible(true);
 		setResizable(false);
 	}
-
-	public static void main(String[] args) {
-		new FrameGerenciarMedico(null);
-	}
-
 }

@@ -57,8 +57,9 @@ public class FrameConsulta {
 		JTextField tfNovo = new JTextField();
 		JComboBox cbNovo = new JComboBox();
 	}
-	
-	public FrameConsulta(FramePrincipal pai,Consulta c, int tipo) {
+
+	public FrameConsulta(FramePrincipal pai,Consulta c, int tipo) 
+    {
 		this(pai);
 		this.c = c;
 		this.tipo = tipo;
@@ -87,12 +88,10 @@ public class FrameConsulta {
 			Funcoes.mostrarMensagemErro("Erro ao salvar");
 		else
 			frmConsulta.dispose();
-		
-			
 	}
 	
-	
-	public FrameConsulta(FramePrincipal pai) {
+	public FrameConsulta(FramePrincipal pai) 
+	{
 		this.pai = pai;
 		frmConsulta = new JFrame();
 		frmConsulta.setTitle("Consulta");

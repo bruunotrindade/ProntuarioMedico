@@ -49,6 +49,18 @@ public class FuncionarioDao extends Dao {
 		}
 	}
 	
+	public static Funcionario getFuncionario(String matricula)
+	{
+		try
+		{
+			return getBy("MATRICULA", matricula).get(0);
+		}
+		catch(NullPointerException npe)
+		{
+			return null;
+		}
+	}
+	
 	public static Funcionario getFuncionarioByLogin(String cpf, String senha)
 	{
 		try
@@ -78,6 +90,7 @@ public class FuncionarioDao extends Dao {
 				Funcionario p = new Funcionario((int) r.get("ID"), (String) r.get("MATRICULA"),(String) r.get("NOME"),(String) r.get("CPF"),
 						(String) r.get("SENHA"), (String)r.get("DT_NASCIMENTO").toString(),(String) r.get("FUNCAO"),r.get("ATIVO").equals("S"),
 						(int) r.get("PERMISSAO"));
+				System.out.println(p.getNome() + p.getId());
 				ps.add(p);
 			}
 			
