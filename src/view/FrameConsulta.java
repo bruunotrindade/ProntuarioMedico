@@ -11,8 +11,10 @@ import java.awt.Component;
 import java.awt.Cursor;
 
 import javax.swing.border.TitledBorder;
+import javax.swing.text.MaskFormatter;
 
 import dao.ConsultaDao;
+import dao.FuncionarioDao;
 import dao.PacienteDao;
 import dao.ProcedimentoDao;
 import javax.swing.JLabel;
@@ -28,11 +30,14 @@ import java.util.ArrayList;
 
 import javax.swing.JTextArea;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JButton;
 import javax.swing.DefaultComboBoxModel;
 
 import model.Procedimento;
+import utils.Funcoes;
 import model.Consulta;
+import model.Funcionario;
 import model.Medico;
 import model.Paciente;
 
@@ -44,12 +49,48 @@ public class FrameConsulta {
 	private JTextField tfNascimento;
 	private JTextField tfDescricao;
 	private FramePrincipal pai;
-
+	private Consulta c;
+	private int tipo;
+	private JTextArea taSintomas, taObs;
 	class ProcedimentoGUI
 	{
 		JTextField tfNovo = new JTextField();
 		JComboBox cbNovo = new JComboBox();
 	}
+	
+	public FrameConsulta(FramePrincipal pai,Consulta c, int tipo) {
+		this(pai);
+		this.c = c;
+		this.tipo = tipo;
+		boolean erros = false;
+		tfCpf.setText(c.getPaciente().getCpf());
+		tfNome.setText(c.getPaciente().getNome());
+		tfNascimento.setText(c.getPaciente().getDt_nasc());
+		taSintomas.setText(c.getSintomas());
+		taObs.setText(c.getObs());
+		ConsultaDao consuDao = new ConsultaDao();
+		
+		if(tipo==0) {
+			System.out.println("SAVE");
+			Paciente paciente = PacienteDao.getBy("NOME", tfNome.getText()).get(0);
+			Consulta consu = new Consulta(taSintomas.getText(), taObs.getText(), "", paciente, (Medico)pai.getUsuario());			
+			erros = consuDao.update(consu) ? false : true;
+			
+			erros = consuDao.insert(consu) ? false : true; 
+		}else {
+			System.out.println("ATT");
+			Paciente paciente = PacienteDao.getBy("NOME", tfNome.getText()).get(0);
+			Consulta consu = new Consulta(taSintomas.getText(), taObs.getText(), "", paciente, (Medico)pai.getUsuario());			
+			erros = consuDao.update(consu) ? false : true;
+		}
+		if(erros)
+			Funcoes.mostrarMensagemErro("Erro ao salvar");
+		else
+			frmConsulta.dispose();
+		
+			
+	}
+	
 	
 	public FrameConsulta(FramePrincipal pai) {
 		this.pai = pai;
@@ -59,6 +100,7 @@ public class FrameConsulta {
 		frmConsulta.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmConsulta.getContentPane().setLayout(new BoxLayout(frmConsulta.getContentPane(), BoxLayout.PAGE_AXIS));
 		frmConsulta.setSize(500, 500);
+		frmConsulta.setResizable(false);
 		
 		JPanel pnDados = new JPanel();
 		pnDados.setBorder(new TitledBorder(null, "Dados pessoais", TitledBorder.LEADING, TitledBorder.TOP, null, null));
@@ -91,8 +133,14 @@ public class FrameConsulta {
 		pn2_1.add(lbCpf);
 		
 		tfCpf = new JTextField();
+		try
+		{
+			tfCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		}
+		catch(Exception e){}
 		pn2_1.add(tfCpf);
 		tfCpf.setColumns(10);
+		
 		
 		JPanel pn2_2 = new JPanel();
 		FlowLayout fl_pn2_2 = (FlowLayout) pn2_2.getLayout();
@@ -103,8 +151,12 @@ public class FrameConsulta {
 		pn2_2.add(lbNascimento);
 		
 		tfNascimento = new JTextField();
+		try {
+			tfNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			}catch (Exception e) {}
 		pn2_2.add(tfNascimento);
 		tfNascimento.setColumns(10);
+		
 		
 		JPanel pn3 = new JPanel();
 		FlowLayout fl_pn3 = (FlowLayout) pn3.getLayout();
@@ -114,7 +166,7 @@ public class FrameConsulta {
 		JLabel lbSintomas = new JLabel("Sintomas:");
 		pn3.add(lbSintomas);
 		
-		JTextArea taSintomas = new JTextArea();
+		taSintomas = new JTextArea();
 		taSintomas.setRows(4);
 		taSintomas.setColumns(30);
 		pn3.add(taSintomas);
@@ -127,7 +179,7 @@ public class FrameConsulta {
 		JLabel lblObs = new JLabel("Obs.:");
 		pn4.add(lblObs);
 		
-		JTextArea taObs = new JTextArea();
+		taObs = new JTextArea();
 		taObs.setRows(4);
 		taObs.setColumns(33);
 		pn4.add(taObs);	
