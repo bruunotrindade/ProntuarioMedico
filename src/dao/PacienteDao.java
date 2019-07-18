@@ -10,9 +10,9 @@ public class PacienteDao extends Dao {
 	
 	public static boolean insert(Paciente p) {
 		if(p != null) {
-			return mysql.query("INSERT INTO pacientes VALUES (DEFAULT, " + p.getNome() + ",'"+p.getCpf()+"','"+p.getDt_nasc()+
-					"','"+p.getEst_civil()+"','"+p.getConjuge()+"','"+p.getEndereco()+"','"+p.getBairro()+"','"+p.getCidade()+
-					"','"+p.getCep()+"','"+p.getUf()+"','"+p.getFone()+"','"+p.getEmail()+"','"+p.getProfissao()+"','"+p.isObito()+
+			return mysql.query("INSERT INTO pacientes VALUES (DEFAULT, '" + p.getNome() + "','"+p.getCpf()+ "','"+p.getSexo()+"','"+p.getDt_nasc()+
+					"','"+p.getEst_civil()+"','"+p.getEndereco()+"','"+p.getBairro()+"','"+p.getCidade()+
+					"','"+p.getCep()+"','"+p.getUf()+"','"+p.getFone()+"','"+p.getEmail()+"','"+p.getProfissao()+"','"+(p.isObito()?'S':'N')+
 					"','"+p.getObs()+"')");	
 		}
 		return false;
@@ -20,10 +20,10 @@ public class PacienteDao extends Dao {
 	
 	public static boolean update(Paciente p) {
 		if(p != null) {
-			return mysql.query("UPDATE pacientes SET NOME=" + p.getNome() + ", CPF='"+p.getCpf()+"', DT_NASCIMENTO='"+p.getDt_nasc()+
-					"', ESTADO_CIVIL='"+p.getEst_civil()+"', CONJUGE='"+p.getConjuge()+"', ENDERECO='"+p.getEndereco()+"', BAIRRO='"+p.getBairro()+
+			return mysql.query("UPDATE pacientes SET NOME='" + p.getNome() + "', CPF='"+p.getCpf()+"', SEXO='"+p.getSexo()+"', DT_NASCIMENTO='"+p.getDt_nasc()+
+					"', ESTADO_CIVIL='"+p.getEst_civil()+"', ENDERECO='"+p.getEndereco()+"', BAIRRO='"+p.getBairro()+
 					"', CIDADE='"+p.getCidade()+"', CEP='"+p.getCep()+"', UF='"+p.getUf()+"', FONE='"+p.getFone()+"', EMAIL='"+p.getEmail()+
-					"', PROFISSAO='"+p.getProfissao()+"', OBITO='"+p.isObito()+"', OBS'"+p.getObs()+"' WHERE ID=" + p.getId());	
+					"', PROFISSAO='"+p.getProfissao()+"', OBITO='"+ (p.isObito() ? 'S' : 'N') +"', OBS='"+p.getObs()+"' WHERE ID=" + p.getId());	
 		}
 		return false;
 	}
@@ -58,8 +58,9 @@ public class PacienteDao extends Dao {
 			ArrayList<HashMap<String, Object>> resultado = mysql.fetch_assoc_all();
 			
 			for(HashMap<String,Object> r : resultado) {
-				Paciente paciente = new Paciente((int) r.get("ID"), (String) r.get("NOME"), (String) r.get("CPF"), (String) r.get("DT_NASCIMENTO").toString(),
-						(String) r.get("ESTADO_CIVIL"), (String) r.get("CONJUGE"), (String) r.get("ENDERECO"), (String) r.get("BAIRRO"),
+				char sexo = ((String) r.get("SEXO")).charAt(0);
+				Paciente paciente = new Paciente((int) r.get("ID"), (String) r.get("NOME"), (String) r.get("CPF"),sexo, (String) r.get("DT_NASCIMENTO").toString(),
+						(String) r.get("ESTADO_CIVIL"), (String) r.get("ENDERECO"), (String) r.get("BAIRRO"),
 						(String) r.get("CIDADE"), (String) r.get("CEP"), (String) r.get("UF"), (String) r.get("FONE"), (String) r.get("EMAIL"),
 						(String) r.get("PROFISSAO"), (boolean) r.get("OBITO").equals("S"), (String) r.get("OBS"));
 				pacientes.add(paciente);

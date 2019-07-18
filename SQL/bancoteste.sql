@@ -18,6 +18,9 @@
 --
 -- Table structure for table `consultas`
 --
+CREATE DATABASE prontuario;
+
+USE prontuario;
 
 DROP TABLE IF EXISTS `consultas`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;

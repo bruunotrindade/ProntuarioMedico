@@ -2,10 +2,11 @@ package model;
 
 public class Paciente {
 	private int id;
-	private String nome, cpf, dt_nasc, est_civil, conjuge, endereco, bairro, cidade, cep, uf, fone, email, profissao, obs;
+	private String nome, cpf, dt_nasc, est_civil, endereco, bairro, cidade, cep, uf, fone, email, profissao, obs;
+	private char sexo;
 	private boolean obito;
 	
-	public Paciente(int id, String nome, String cpf, String dt_nasc, String est_civil, String conjuge, String endereco,
+	public Paciente(int id, String nome, String cpf,char sexo, String dt_nasc, String est_civil, String endereco,
 			String bairro, String cidade, String cep, String uf, String fone, String email, String profissao,
 			boolean obito, String obs) 
 	{
@@ -14,7 +15,6 @@ public class Paciente {
 		this.cpf = cpf;
 		this.dt_nasc = dt_nasc;
 		this.est_civil = est_civil;
-		this.conjuge = conjuge;
 		this.endereco = endereco;
 		this.bairro = bairro;
 		this.cidade = cidade;
@@ -25,9 +25,10 @@ public class Paciente {
 		this.profissao = profissao;
 		this.obs = obs;
 		this.obito = obito;
+		this.sexo=sexo;
 	}
 
-	public Paciente(String nome, String cpf, String dt_nasc, String est_civil, String conjuge, String endereco,
+	public Paciente(String nome, String cpf,char sexo, String dt_nasc, String est_civil, String endereco,
 			String bairro, String cidade, String cep, String uf, String fone, String email, String profissao,
 			String obs, boolean obito) 
 	{
@@ -35,7 +36,6 @@ public class Paciente {
 		this.cpf = cpf;
 		this.dt_nasc = dt_nasc;
 		this.est_civil = est_civil;
-		this.conjuge = conjuge;
 		this.endereco = endereco;
 		this.bairro = bairro;
 		this.cidade = cidade;
@@ -46,6 +46,15 @@ public class Paciente {
 		this.profissao = profissao;
 		this.obs = obs;
 		this.obito = obito;
+		this.sexo=sexo;
+	}
+
+	public char getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(char sexo) {
+		this.sexo = sexo;
 	}
 
 	public int getId() {
@@ -86,14 +95,6 @@ public class Paciente {
 
 	public void setEst_civil(String est_civil) {
 		this.est_civil = est_civil;
-	}
-
-	public String getConjuge() {
-		return conjuge;
-	}
-
-	public void setConjuge(String conjuge) {
-		this.conjuge = conjuge;
 	}
 
 	public String getEndereco() {
