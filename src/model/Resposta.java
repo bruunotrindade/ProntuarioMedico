@@ -19,10 +19,6 @@ public class Resposta {
 		this.paciente = paciente;
 	}
 	
-	public Resposta(int id2, String conteudo2, int i, int j) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public int getId() {
 		return id;
 	}

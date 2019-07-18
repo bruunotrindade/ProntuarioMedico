@@ -108,4 +108,6 @@ public class Funcionario {
 	public void setPermissao(int permissao) {
 		this.permissao = permissao;
 	}
+	
+	
 }

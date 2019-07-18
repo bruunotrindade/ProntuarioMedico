@@ -23,10 +23,6 @@ public class Consulta {
 		this.medico = medico;
 	}
 
-	public Consulta(int id2, String sintomas2, String obs2, String data_hora2, int i, int j) {
-		// TODO Auto-generated constructor stub
-	}
-
 	public int getId() {
 		return id;
 	}
