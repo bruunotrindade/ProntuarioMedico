@@ -12,7 +12,7 @@ public class ConsultaTableModel extends BasicTableModel
 	public ConsultaTableModel(ArrayList<Consulta> dados) 
 	{
 		super(new ArrayList<Object>(dados));
-		this.columns = new String[] {"Código", "Paciente", "Médico", "Data", "Sintomas"};
+		this.columns = new String[] {"Código", "Paciente", "Médico", "Data e Hora", "Sintomas"};
 	}
 
 	public Object getValueAt(int rowIndex, int colIndex) 
@@ -27,9 +27,9 @@ public class ConsultaTableModel extends BasicTableModel
 			case 2:
 				return consulta.getMedico().getNome();
 			case 3:
-				return consulta.getData_hora();
+				return consulta.getData_hora().substring(0, consulta.getData_hora().length()-2);
 			case 4:
-				return consulta.getSintomas();
+				return consulta.getSintomas().replaceAll("\n", ", ");
 		    default:
 		        throw new IndexOutOfBoundsException("Coluna inválida!");
 		}

@@ -11,8 +11,8 @@ public class ProcedimentoDao extends Dao {
 	
 	public static boolean insert(Procedimento p) {
 		if(p != null) {
-			return mysql.query("INSERT INTO procedimentos VALUES (DEFAULT, '" + p.getTipo() + "','"+p.getDesc()+"','"+p.getData_hora()+
-					"',"+p.getConsulta().getId()+")");	
+			return mysql.query("INSERT INTO procedimentos VALUES (DEFAULT, '" + p.getTipo() + "','"+p.getDesc()+"',"+(p.getData_hora().length() != 0 ?"'"+p.getData_hora()+"'":"NOW()")+
+					","+p.getConsulta().getId()+")");	
 		}
 		return false;
 	}
@@ -27,9 +27,13 @@ public class ProcedimentoDao extends Dao {
 	
 	public static boolean delete(Procedimento p) {
 		if(p != null) {
-			return mysql.query("DELETE FROM prodecimentos WHERE ID = " + p.getId());
+			return mysql.query("DELETE FROM procedimentos WHERE ID = " + p.getId());
 		}
 		return false;
+	}
+	
+	public static boolean delete(int consulta) {
+		return mysql.query("DELETE FROM procedimentos WHERE CONSULTA_ID = " + consulta);
 	}
 	
 	public static ArrayList<Procedimento> getAll(){
@@ -56,7 +60,7 @@ public class ProcedimentoDao extends Dao {
 			
 			for(HashMap<String,Object> r : resultado) {
 				Procedimento p = new Procedimento((int) r.get("ID"), (String) r.get("TIPO"),(String) r.get("DESCRICAO"),
-						(String) r.get("DATA_HORA"),(int) r.get("CONSULTA_ID"));
+						(String) r.get("DATA_HORA").toString(),ConsultaDao.getConsulta((int) r.get("CONSULTA_ID")));
 				ps.add(p);
 			}
 			

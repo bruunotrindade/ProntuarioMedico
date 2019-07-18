@@ -98,7 +98,7 @@ public class FramePrincipal extends JFrame
 				else if(m == miGerenciarPacientes)
 					new FrameGerenciarPaciente(FramePrincipal.this);
 				else if(m == miNovaConsulta)
-					new FrameConsulta(FramePrincipal.this);
+					new FrameConsulta();
 				else if(m == miAlterarAnamnese)
 					new FrameQuestoesAnamnese(FramePrincipal.this);
 				else if(m == miAlterarHistorico)

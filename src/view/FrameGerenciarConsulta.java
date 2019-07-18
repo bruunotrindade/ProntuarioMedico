@@ -12,6 +12,7 @@ import javax.swing.ListSelectionModel;
 
 import dao.ConsultaDao;
 import dao.PacienteDao;
+import model.Consulta;
 import tbmodel.ConsultaTableModel;
 import tbmodel.PacienteTableModel;
 import utils.Funcoes;
@@ -68,7 +69,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				new FrameConsulta(FrameGerenciarConsulta.this, (Consulta)(tbModel.getDados().get(table.getSelectedRow())), 1);
 			}
 		});
 		
@@ -76,7 +77,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				new FrameConsulta(FrameGerenciarConsulta.this, (Consulta)(tbModel.getDados().get(table.getSelectedRow())), 0);
 			}
 		});
 		
@@ -84,7 +85,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				new FrameConsulta(FrameGerenciarConsulta.this, (Consulta)(tbModel.getDados().get(table.getSelectedRow())), 2);
 			}
 		});
 		

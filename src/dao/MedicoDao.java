@@ -12,10 +12,8 @@ public class MedicoDao extends Dao {
 
 	public static boolean insert(Medico p) {
 		if (p != null) {
-			String query = "INSERT INTO medicos VALUES (DEFAULT, '" + p.getCrm() + "','" + p.getEspecialidade() + "', '"
-					+ p.getId() + "')";
-			System.out.println(query);
-			return mysql.query(query);
+			return mysql.query("INSERT INTO medicos VALUES (DEFAULT, '" + p.getCrm() + "','" + p.getEspecialidade() + "', '"
+					+ p.getId() + "')");
 		}
 		return false;
 	}
@@ -31,7 +29,7 @@ public class MedicoDao extends Dao {
 
 	public static boolean delete(Medico p) {
 		if (p != null) {
-			return mysql.query("DELETE FROM medicos WHERE ID = " + p.getId());
+			return mysql.query("DELETE FROM medicos WHERE ID = " + p.getIdMedico());
 		}
 		return false;
 	}
@@ -57,7 +55,7 @@ public class MedicoDao extends Dao {
 		if (mysql.query("SELECT * FROM medicos WHERE FUNCIONARIO_ID = '" + f.getId() + "'")) {
 			HashMap<String, Object> r = mysql.fetch_assoc();
 				
-			return new Medico(f, (String) r.get("CRM"), (String) r.get("ESPECIALIDADE"));
+			return new Medico(f, (int)r.get("ID"), (String) r.get("CRM"), (String) r.get("ESPECIALIDADE"));
 		}
 		return null;
 	}
@@ -69,7 +67,7 @@ public class MedicoDao extends Dao {
 
 			for (HashMap<String, Object> r : resultado) {
 				
-				Medico p = new Medico(FuncionarioDao.getFuncionario((int)r.get("FUNCIONARIO_ID")), (String) r.get("CRM"), (String) r.get("ESPECIALIDADE"));
+				Medico p = new Medico(FuncionarioDao.getFuncionario((int)r.get("FUNCIONARIO_ID")), (int)r.get("ID"), (String) r.get("CRM"), (String) r.get("ESPECIALIDADE"));
 				ps.add(p);
 			}
 

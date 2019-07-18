@@ -13,8 +13,17 @@ public class ConsultaDao extends Dao {
 
 	public static boolean insert(Consulta p) {
 		if(p != null) {
-			return mysql.query("INSERT INTO consultas VALUES (DEFAULT, '" + p.getSintomas() + "','"+p.getObs()+"','"+p.getData_hora()+
-					"',"+p.getPaciente().getId()+","+p.getMedico().getId()+")");	
+			boolean query = mysql.query("INSERT INTO consultas VALUES (DEFAULT, '" + p.getSintomas() + "','"+p.getObs()+"',"+(p.getData_hora().length() != 0 ? "'"+p.getData_hora()+"'":"NOW()")+
+					","+p.getPaciente().getId()+","+p.getMedico().getIdMedico()+")");
+			
+			if(query)
+			{
+				mysql.query("SELECT MAX(ID) AS ID FROM consultas");
+				HashMap<String, Object> result = mysql.fetch_assoc();
+				int maxId = (int)result.get("ID");
+				p.setId(maxId);
+			}
+			return query;	
 		}
 		return false;
 	}
@@ -22,7 +31,7 @@ public class ConsultaDao extends Dao {
 	public static boolean update(Consulta p) {
 		if(p != null) {
 			return mysql.query("UPDATE consultas SET SINTOMAS='"+p.getSintomas() +"', OBSERVACOES='" + p.getObs() +
-					"', DATA_HORA='"+p.getData_hora()+"', PACIENTE_ID="+p.getPaciente().getId()+", MEDICO_ID='"+p.getMedico().getId()+
+					"', PACIENTE_ID="+p.getPaciente().getId()+", MEDICO_ID="+p.getMedico().getIdMedico()+
 					" WHERE ID=" + p.getId());	
 		}
 		return false;

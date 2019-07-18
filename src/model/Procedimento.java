@@ -11,6 +11,7 @@ public class Procedimento {
 		this.desc = desc;
 		this.data_hora = data_hora;
 		this.consulta = consulta;
+		System.out.println(desc);
 	}
 	
 	public Procedimento(String tipo, String desc, String data_hora, Consulta consulta) {
@@ -18,10 +19,6 @@ public class Procedimento {
 		this.desc = desc;
 		this.data_hora = data_hora;
 		this.consulta = consulta;
-	}
-
-	public Procedimento(int id2, String tipo2, String desc2, String data_hora2, int i) {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getId() {
