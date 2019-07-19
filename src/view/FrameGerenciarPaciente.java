@@ -87,16 +87,11 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 			}
 		});
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Gerenciamento de Pacientes");
 		pack();
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setResizable(false);
-	}
-	
-	public static void main(String[] args)
-	{
-		new FrameGerenciarPaciente(null);
 	}
 }

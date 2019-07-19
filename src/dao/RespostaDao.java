@@ -3,6 +3,7 @@ package dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+
 import model.Paciente;
 import model.Pergunta;
 import model.Resposta;
@@ -32,6 +33,10 @@ public class RespostaDao extends Dao {
 		return false;
 	}
 	
+	public static boolean delete(int paciente) {
+		return mysql.query("DELETE FROM respostas WHERE PACIENTE_ID = " + paciente);
+	}
+	
 	public static ArrayList<Resposta> getAll(){
 		return getBy("1", "1");
 	}
@@ -55,7 +60,7 @@ public class RespostaDao extends Dao {
 			ArrayList<HashMap<String, Object>> resultado = mysql.fetch_assoc_all();
 			
 			for(HashMap<String,Object> r : resultado) {
-				Resposta p = new Resposta((int) r.get("ID"), (String) r.get("CONTEUDO"),(int) r.get("PERGUNTA_ID"),(int) r.get("PACIENTE_ID"));
+				Resposta p = new Resposta((int) r.get("ID"), (String) r.get("CONTEUDO"), PerguntaDao.getPergunta((int) r.get("PERGUNTA_ID")), PacienteDao.getPaciente((int) r.get("PACIENTE_ID")));
 				ps.add(p);
 			}
 			
@@ -63,4 +68,28 @@ public class RespostaDao extends Dao {
 		}
 		return null;
 	}
+	
+	public static ArrayList<Resposta> getByPaciente(Paciente p, String tipo){
+		if(p != null)
+		{
+			ArrayList<Resposta> ps = new ArrayList<Resposta>();
+			
+			if(mysql.query("SELECT r.ID R_ID, r.CONTEUDO R_CONTEUDO, p.ID P_ID, p.DESCRICAO P_DESCRICAO, p.TIPO P_TIPO FROM respostas r, perguntas p WHERE r.PERGUNTA_ID = p.ID AND p.QUESTIONARIO='"+tipo+"' AND r.PACIENTE_ID="+p.getId()+" ORDER BY r.PERGUNTA_ID ASC")) {
+				ArrayList<HashMap<String, Object>> resultado = mysql.fetch_assoc_all();
+				for(HashMap<String,Object> r : resultado) {
+					
+					Resposta res = new Resposta((int) r.get("R_ID"), (String) r.get("R_CONTEUDO"), new Pergunta((int)r.get("P_ID"), (String)r.get("P_DESCRICAO"), (int)r.get("P_TIPO"), tipo), p);
+					ps.add(res);
+				}
+				
+				return ps;
+			}
+		}
+		return null;
+	}
+	public static void main(String[] args) {
+		Paciente p = PacienteDao.getPaciente(3);
+		getByPaciente(p, "H");
+	}
 }
+

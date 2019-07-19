@@ -54,14 +54,16 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				String busca = tfTexto.getText(), selected = bg.getSelection().getActionCommand();
-				/*if(selected.equals("Todos"))
+				if(selected.equals("Todos"))
 					tbModel.setDados(ConsultaDao.getAll());
 				else if(selected.equals("Código"))
 					tbModel.setDados(ConsultaDao.getBy("ID", busca));
 				else if(selected.equals("Paciente"))
 					tbModel.setDados(ConsultaDao.getBy("PACIENTE_ID", busca));
+				else if(selected.equals("Data"))
+					tbModel.setDados(ConsultaDao.getBy("DATA_HORA", busca));
 				else
-					tbModel.setDados(ConsultaDao.getBy(selected.toUpperCase(), busca));*/
+					tbModel.setDados(ConsultaDao.getBy(selected.toUpperCase(), busca));
 			}
 		});
 		
