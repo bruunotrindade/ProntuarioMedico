@@ -22,7 +22,6 @@ import javax.swing.JMenu;
 import javax.swing.JPanel;
 import javax.swing.border.*;
 
-import dao.FrameSobre;
 import model.Funcionario;
 
 import javax.swing.JMenuBar;
@@ -100,8 +99,6 @@ public class FramePrincipal extends JFrame
 					new FrameGerenciarPaciente(FramePrincipal.this);
 				else if(m == miNovoPaciente)
 					new FramePaciente();
-				else if(m == miSobre)
-					new FrameSobre(FramePrincipal.this);
 				else if(m == miNovaConsulta)
 					new FrameConsulta();
 				else if(m == miAlterarAnamnese)
@@ -112,6 +109,10 @@ public class FramePrincipal extends JFrame
 					new FrameGerenciarMedico(FramePrincipal.this);
 				else if(m == miGerenciarFuncionarios)
 					new FrameGerenciarFuncionario(FramePrincipal.this);
+				else if(m == miAjuda)
+					new FrameAjuda();
+				else if(m == miSobre)
+					new FrameSobre();
 			}
 		};
 		action.putValue(Action.NAME, nome);
