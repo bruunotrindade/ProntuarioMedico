@@ -10,8 +10,8 @@ public class PacienteDao extends Dao {
 	
 	public static boolean insert(Paciente p) {
 		if(p != null) {
-			return mysql.query("INSERT INTO pacientes VALUES (DEFAULT, '" + p.getNome() + "','"+p.getCpf()+ "','"+p.getSexo()+"','"+p.getDt_nasc()+
-					"','"+p.getEst_civil()+"','"+p.getEndereco()+"','"+p.getBairro()+"','"+p.getCidade()+
+			return mysql.query("INSERT INTO pacientes VALUES (DEFAULT, '" + p.getNome() + "','"+p.getCpf()+ "','"+p.getSexo()+"','"+p.getDataNascimento()+
+					"','"+p.getEstadoCivil()+"','"+p.getEndereco()+"','"+p.getBairro()+"','"+p.getCidade()+
 					"','"+p.getCep()+"','"+p.getUf()+"','"+p.getFone()+"','"+p.getEmail()+"','"+p.getProfissao()+"','"+(p.isObito()?'S':'N')+
 					"','"+p.getObs()+"')");	
 		}
@@ -20,8 +20,8 @@ public class PacienteDao extends Dao {
 	
 	public static boolean update(Paciente p) {
 		if(p != null) {
-			return mysql.query("UPDATE pacientes SET NOME='" + p.getNome() + "', CPF='"+p.getCpf()+"', SEXO='"+p.getSexo()+"', DT_NASCIMENTO='"+p.getDt_nasc()+
-					"', ESTADO_CIVIL='"+p.getEst_civil()+"', ENDERECO='"+p.getEndereco()+"', BAIRRO='"+p.getBairro()+
+			return mysql.query("UPDATE pacientes SET NOME='" + p.getNome() + "', CPF='"+p.getCpf()+"', SEXO='"+p.getSexo()+"', DT_NASCIMENTO='"+p.getDataNascimento()+
+					"', ESTADO_CIVIL='"+p.getEstadoCivil()+"', ENDERECO='"+p.getEndereco()+"', BAIRRO='"+p.getBairro()+
 					"', CIDADE='"+p.getCidade()+"', CEP='"+p.getCep()+"', UF='"+p.getUf()+"', FONE='"+p.getFone()+"', EMAIL='"+p.getEmail()+
 					"', PROFISSAO='"+p.getProfissao()+"', OBITO='"+ (p.isObito() ? 'S' : 'N') +"', OBS='"+p.getObs()+"' WHERE ID=" + p.getId());	
 		}

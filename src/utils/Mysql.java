@@ -119,7 +119,7 @@ public class Mysql
         		HashMap<String, Object> ob = new HashMap<String, Object>();
             	ResultSetMetaData rmsd = rs.getMetaData();
             	for(int i = 1; i <= rmsd.getColumnCount(); ++i)
-            		ob.put(rmsd.getColumnName(i), rs.getObject(i));
+            		ob.put(rmsd.getColumnLabel(i), rs.getObject(i));
             	
             	vet.add(ob);
         	}

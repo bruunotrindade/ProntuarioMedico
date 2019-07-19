@@ -81,19 +81,19 @@ public class Paciente {
 		this.cpf = cpf;
 	}
 
-	public String getDt_nasc() {
+	public String getDataNascimento() {
 		return dt_nasc;
 	}
 
-	public void setDt_nasc(String dt_nasc) {
+	public void setDataNascimento(String dt_nasc) {
 		this.dt_nasc = dt_nasc;
 	}
 
-	public String getEst_civil() {
+	public String getEstadoCivil() {
 		return est_civil;
 	}
 
-	public void setEst_civil(String est_civil) {
+	public void setEstadoCivil(String est_civil) {
 		this.est_civil = est_civil;
 	}
 

@@ -52,6 +52,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				desabilitarButtons();
 				String busca = tfTexto.getText(), selected = bg.getSelection().getActionCommand();
 				if(selected.equals("Todos"))
 					tbModel.setDados(FuncionarioDao.getAll());
@@ -75,6 +76,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 				int ind = table.getSelectedRow();
 				Funcionario f = (Funcionario) tbModel.getValue(ind);
 				new FrameFuncionario(FrameGerenciarFuncionario.this, f, 1);
+				desabilitarButtons();
 			}
 		});
 		
@@ -95,8 +97,10 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				int ind = table.getSelectedRow();
+				System.out.println("IND: " + ind);
 				Funcionario funcionario = (Funcionario) tbModel.getValue(ind);
 				new FrameFuncionario(FrameGerenciarFuncionario.this, funcionario, 2);
+				desabilitarButtons();
 			}
 		});
 		

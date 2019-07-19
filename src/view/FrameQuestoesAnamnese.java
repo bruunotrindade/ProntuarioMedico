@@ -57,6 +57,10 @@ public class FrameQuestoesAnamnese extends JFrame
 		JLabel lbX = new JLabel("X");
 	}
 	
+	public static void main(String[] args) {
+		new FrameQuestoesAnamnese(null);
+	}
+	
 	public FrameQuestoesAnamnese(FramePrincipal pai) 
 	{
 		this.pai = pai;

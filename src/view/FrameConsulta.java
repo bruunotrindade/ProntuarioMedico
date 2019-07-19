@@ -85,7 +85,7 @@ public class FrameConsulta extends JFrame
 		boolean erros = false;
 		tfCpf.setText(c.getPaciente().getCpf());
 		tfNome.setText(c.getPaciente().getNome());
-		tfNascimento.setText(Funcoes.converterDataBR(c.getPaciente().getDt_nasc()));
+		tfNascimento.setText(Funcoes.converterDataBR(c.getPaciente().getDataNascimento()));
 		taSintomas.setText(c.getSintomas());
 		taObs.setText(c.getObs());
 		tfCpf.setEditable(false);
@@ -353,7 +353,7 @@ public class FrameConsulta extends JFrame
 						tfCpf.setEditable(false);
 						tfCpf.setFocusable(false);
 						tfNome.setText(p.getNome());
-						tfNascimento.setText(Funcoes.converterDataBR(p.getDt_nasc()));
+						tfNascimento.setText(Funcoes.converterDataBR(p.getDataNascimento()));
 						taObs.setEditable(true);
 						taSintomas.setEditable(true);
 						procs.get(0).cbNovo.setEnabled(true);

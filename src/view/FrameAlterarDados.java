@@ -285,7 +285,7 @@ public class FrameAlterarDados extends JFrame {
 		tfFuncao.setText(f.getFuncao());
 		tfFuncao.setEnabled(false);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
 		setTitle("Alteração de Dados");
