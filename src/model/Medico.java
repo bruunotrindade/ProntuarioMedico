@@ -24,7 +24,7 @@ public class Medico extends Funcionario {
 	}
 	
 	public Medico(Funcionario f, int idMedico, String crm, String especialidade) {
-		super(f.getId(), f.getMatricula(), f.getNome(), f.getCpf(), f.getSenha(), f.getDt_nasc(), f.getFuncao(), f.isAtivo(), f.getPermissao());
+		super(f.getId(), f.getMatricula(), f.getNome(), f.getCpf(), f.getSenha(), f.getDataNascimento(), f.getFuncao(), f.isAtivo(), f.getPermissao());
 		this.crm = crm;
 		this.especialidade = especialidade;
 		this.idMedico = idMedico;

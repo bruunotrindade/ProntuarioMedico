@@ -24,7 +24,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 	public FrameGerenciarFuncionario(FramePrincipal pai) {
 		super(pai);
 		
-		String radioButtons[] = {"Código", "Matrícula", "Nome", "CPF", "Nascimento", "Funcao", "Desativos", "Todos"};
+		String radioButtons[] = {"Código", "Matrícula", "Nome", "CPF", "Nascimento", "Funcao", "Desativados", "Todos"};
 		ButtonGroup bg = preencherOpcoesConsulta(radioButtons);
 		
 		tbModel = new FuncionarioTableModel(FuncionarioDao.getAll());
@@ -74,7 +74,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 			{
 				int ind = table.getSelectedRow();
 				Funcionario f = (Funcionario) tbModel.getValue(ind);
-				new FrameCadastroFuncionario(FrameGerenciarFuncionario.this,f);
+				new FrameFuncionario(FrameGerenciarFuncionario.this, f, 1);
 			}
 		});
 		
@@ -86,7 +86,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{	
-				new FrameCadastroFuncionario(FrameGerenciarFuncionario.this);
+				new FrameFuncionario(FrameGerenciarFuncionario.this);
 			}
 		});
 		
@@ -96,8 +96,7 @@ public class FrameGerenciarFuncionario extends FrameGerenciar{
 			{
 				int ind = table.getSelectedRow();
 				Funcionario funcionario = (Funcionario) tbModel.getValue(ind);
-				FuncionarioDao.delete(funcionario);
-				tbModel.onRemove(ind);
+				new FrameFuncionario(FrameGerenciarFuncionario.this, funcionario, 2);
 			}
 		});
 		

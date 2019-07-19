@@ -141,7 +141,7 @@ public class DialogLogin extends JDialog
 					//Validação com o banco
 					Funcionario f = FuncionarioDao.getFuncionarioByLogin(cpf, senha);
 					Medico m;
-					if(f == null)
+					if(f == null || !f.isAtivo())
 						Funcoes.mostrarMensagemErro("CPF ou senha inválido(s)!");
 					else
 					{

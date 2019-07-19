@@ -19,6 +19,7 @@ import model.Medico;
 import tbmodel.FuncionarioTableModel;
 import tbmodel.MedicoTableModel;
 import tbmodel.PacienteTableModel;
+import utils.Funcoes;
 
 public class FrameGerenciarMedico extends FrameGerenciar{
 
@@ -33,6 +34,7 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 		tbModel = new MedicoTableModel(MedicoDao.getAll());
 		table.setModel(tbModel);
 		table.getColumnModel().getColumn(0).setMaxWidth(50);
+		table.getColumnModel().getColumn(7).setMaxWidth(50);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.addMouseListener(new MouseAdapter()
 		{
@@ -62,10 +64,12 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 					tbModel.setDados(MedicoDao.getBy("ID", busca));
 				else if(selected.equals("Matrícula"))
 					tbModel.setDados(MedicoDao.getBy("MATRICULA", busca));
-				else if(selected.equals("Desativos"))
+				else if(selected.equals("Desativados"))
 					tbModel.setDados(MedicoDao.getBy("ATIVO", "0"));
 				else if(selected.equals("Nascimento"))
-					tbModel.setDados(MedicoDao.getBy("DT_NASC", busca));
+					tbModel.setDados(MedicoDao.getBy("DT_NASC", Funcoes.converterDataEUA(busca)));
+				else if(selected.equals("Função"))
+					tbModel.setDados(MedicoDao.getBy("FUNCAO", busca));
 				else
 					tbModel.setDados(MedicoDao.getBy(selected.toUpperCase(), busca));
 			}
@@ -77,7 +81,7 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 			{
 				int ind = table.getSelectedRow();
 				Medico f = (Medico) tbModel.getValue(ind);
-				new FrameCadastroMedico(FrameGerenciarMedico.this,f);
+				new FrameMedico(FrameGerenciarMedico.this, f, 1);
 			}
 		});
 		
@@ -89,8 +93,7 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-				
-				new FrameCadastroMedico(FrameGerenciarMedico.this);
+				new FrameMedico(FrameGerenciarMedico.this);
 			}
 		});
 		
@@ -100,8 +103,7 @@ public class FrameGerenciarMedico extends FrameGerenciar{
 			{
 				int ind = table.getSelectedRow();
 				Medico medico = (Medico) tbModel.getValue(ind);
-				FuncionarioDao.delete(medico);
-				tbModel.onRemove(ind);
+				new FrameMedico(FrameGerenciarMedico.this, medico, 2);
 			}
 		});
 		

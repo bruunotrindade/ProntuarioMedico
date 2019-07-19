@@ -1,7 +1,10 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Frame;
 
 import javax.swing.JFrame;
@@ -10,6 +13,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import dao.FuncionarioDao;
+import dao.MedicoDao;
 import model.Funcionario;
 import utils.Funcoes;
 
@@ -21,16 +25,19 @@ import javax.swing.JTextField;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.Format;
 import java.text.ParseException;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JPasswordField;
 
-public class FrameCadastroFuncionario extends JFrame {
+public class FrameFuncionario extends JFrame {
 
 	private JPanel contentPane;
 	private FrameGerenciarFuncionario pai;
@@ -42,75 +49,93 @@ public class FrameCadastroFuncionario extends JFrame {
 	private JButton btnSalvar;
 	private JLabel lblSenha;
 	private JPasswordField tfSenha;
+	private JCheckBox cbAtivo;
 	private Funcionario f = null;
-	private boolean editar = false;
+	private int tipo = 0;
 	
-	public FrameCadastroFuncionario(FrameGerenciarFuncionario pai, Funcionario f)
+	public FrameFuncionario(FrameGerenciarFuncionario pai, Funcionario f, int tipo)
 	{
 		this(pai);
 		this.f = f;
-		this.editar = true;
+		this.tipo = tipo;
 		preencherCampos(f);
+		
+		if(tipo == 1)
+			setTitle("Edição de Funcionário");
+		else if(tipo == 2)
+		{
+			setTitle("Exclusão de Funcionário");
+			tfMatricula.setEditable(false);
+			tfNome.setEditable(false);
+			tfCpf.setEditable(false);
+			tfDataNasc.setEditable(false);
+			tfFuncao.setEditable(false);
+			tfSenha.setEditable(false);
+			tfSenha.setText("***********");
+			cbAtivo.setEnabled(false);
+		}
 	}
 	
-	public FrameCadastroFuncionario(FrameGerenciarFuncionario pai) {
+	public FrameFuncionario(FrameGerenciarFuncionario pai) {
 		this.pai = pai;
-		System.out.println(editar);
-		setResizable(false);
-		setTitle("Cadastrar Funcionário");
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(520,250);
-		setLocationRelativeTo(null);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
+
+		JPanel pnPrincipal = new JPanel(new BorderLayout());
+		contentPane.add(pnPrincipal, BorderLayout.CENTER);
+		
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 180, 234, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 29, 45, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{29, 29, 29, 29, 29, 29};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
+		pnPrincipal.setLayout(gbl_contentPane);
 		
-		JLabel lblCrm = new JLabel("Matricula");
+		JLabel lblCrm = new JLabel("Matrícula*:");
+		lblCrm.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblCrm = new GridBagConstraints();
 		gbc_lblCrm.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCrm.gridx = 0;
 		gbc_lblCrm.gridy = 0;
-		contentPane.add(lblCrm, gbc_lblCrm);
+		pnPrincipal.add(lblCrm, gbc_lblCrm);
 		
 		tfMatricula = new JTextField();
 		GridBagConstraints gbc_tfMatricula = new GridBagConstraints();
-		gbc_tfMatricula.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfMatricula.fill = GridBagConstraints.BOTH;
 		gbc_tfMatricula.gridwidth = 3;
 		gbc_tfMatricula.insets = new Insets(0, 0, 5, 0);
 		gbc_tfMatricula.gridx = 1;
 		gbc_tfMatricula.gridy = 0;
-		contentPane.add(tfMatricula, gbc_tfMatricula);
+		pnPrincipal.add(tfMatricula, gbc_tfMatricula);
 		tfMatricula.setColumns(10);
 		
-		JLabel lblMatricula = new JLabel("Nome");
+		JLabel lblMatricula = new JLabel("Nome*:");
+		lblMatricula.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblMatricula = new GridBagConstraints();
 		gbc_lblMatricula.insets = new Insets(0, 0, 5, 5);
 		gbc_lblMatricula.gridx = 0;
 		gbc_lblMatricula.gridy = 1;
-		contentPane.add(lblMatricula, gbc_lblMatricula);
+		pnPrincipal.add(lblMatricula, gbc_lblMatricula);
 		
 		tfNome = new JTextField();
 		GridBagConstraints gbc_tfNome = new GridBagConstraints();
 		gbc_tfNome.gridwidth = 3;
 		gbc_tfNome.insets = new Insets(0, 0, 5, 0);
-		gbc_tfNome.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfNome.fill = GridBagConstraints.BOTH;
 		gbc_tfNome.gridx = 1;
 		gbc_tfNome.gridy = 1;
-		contentPane.add(tfNome, gbc_tfNome);
+		pnPrincipal.add(tfNome, gbc_tfNome);
 		tfNome.setColumns(10);
 		
-		JLabel lblCpf = new JLabel("CPF");
+		JLabel lblCpf = new JLabel("CPF*:");
+		lblCpf.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblCpf = new GridBagConstraints();
 		gbc_lblCpf.insets = new Insets(0, 0, 5, 5);
 		gbc_lblCpf.gridx = 0;
 		gbc_lblCpf.gridy = 2;
-		contentPane.add(lblCpf, gbc_lblCpf);
+		pnPrincipal.add(lblCpf, gbc_lblCpf);
 		
 		try {
 			tfCpf =new JFormattedTextField(new MaskFormatter("###.###.###-##"));
@@ -118,18 +143,19 @@ public class FrameCadastroFuncionario extends JFrame {
 		GridBagConstraints gbc_tfCpf = new GridBagConstraints();
 		gbc_tfCpf.gridwidth = 3;
 		gbc_tfCpf.insets = new Insets(0, 0, 5, 0);
-		gbc_tfCpf.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfCpf.fill = GridBagConstraints.BOTH;
 		gbc_tfCpf.gridx = 1;
 		gbc_tfCpf.gridy = 2;
-		contentPane.add(tfCpf, gbc_tfCpf);
+		pnPrincipal.add(tfCpf, gbc_tfCpf);
 		tfCpf.setColumns(10);
 		
-		JLabel lblDataNasc = new JLabel("Data Nasc.");
+		JLabel lblDataNasc = new JLabel("Data Nasc.*:");
+		lblDataNasc.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblDataNasc = new GridBagConstraints();
 		gbc_lblDataNasc.insets = new Insets(0, 0, 5, 5);
 		gbc_lblDataNasc.gridx = 0;
 		gbc_lblDataNasc.gridy = 3;
-		contentPane.add(lblDataNasc, gbc_lblDataNasc);
+		pnPrincipal.add(lblDataNasc, gbc_lblDataNasc);
 		
 		try {
 		tfDataNasc = new JFormattedTextField(new MaskFormatter("##/##/####"));
@@ -138,88 +164,119 @@ public class FrameCadastroFuncionario extends JFrame {
 		GridBagConstraints gbc_tfDataNasc = new GridBagConstraints();
 		gbc_tfDataNasc.gridwidth = 3;
 		gbc_tfDataNasc.insets = new Insets(0, 0, 5, 0);
-		gbc_tfDataNasc.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfDataNasc.fill = GridBagConstraints.BOTH;
 		gbc_tfDataNasc.gridx = 1;
 		gbc_tfDataNasc.gridy = 3;
-		contentPane.add(tfDataNasc, gbc_tfDataNasc);
+		pnPrincipal.add(tfDataNasc, gbc_tfDataNasc);
 		tfDataNasc.setColumns(10);
 		
-		JLabel lblFuno = new JLabel("Função");
+		JLabel lblFuno = new JLabel("Função*:");
+		lblFuno.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblFuno = new GridBagConstraints();
 		gbc_lblFuno.insets = new Insets(0, 0, 5, 5);
 		gbc_lblFuno.gridx = 0;
 		gbc_lblFuno.gridy = 4;
-		contentPane.add(lblFuno, gbc_lblFuno);
+		pnPrincipal.add(lblFuno, gbc_lblFuno);
 		
 		tfFuncao = new JTextField();
 		GridBagConstraints gbc_tfFuncao = new GridBagConstraints();
 		gbc_tfFuncao.gridwidth = 3;
 		gbc_tfFuncao.insets = new Insets(0, 0, 5, 0);
-		gbc_tfFuncao.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfFuncao.fill = GridBagConstraints.BOTH;
 		gbc_tfFuncao.gridx = 1;
 		gbc_tfFuncao.gridy = 4;
-		contentPane.add(tfFuncao, gbc_tfFuncao);
+		pnPrincipal.add(tfFuncao, gbc_tfFuncao);
 		tfFuncao.setColumns(10);
 		
-		lblSenha = new JLabel("Senha");
+		lblSenha = new JLabel("Senha*:");
+		lblSenha.setFont(new Font("Dialog", Font.PLAIN, 12));
 		GridBagConstraints gbc_lblSenha = new GridBagConstraints();
 		gbc_lblSenha.insets = new Insets(0, 0, 5, 5);
 		gbc_lblSenha.gridx = 0;
 		gbc_lblSenha.gridy = 5;
-		contentPane.add(lblSenha, gbc_lblSenha);
+		pnPrincipal.add(lblSenha, gbc_lblSenha);
 		
 		tfSenha = new JPasswordField();
 		GridBagConstraints gbc_tfSenha = new GridBagConstraints();
 		gbc_tfSenha.gridwidth = 3;
 		gbc_tfSenha.insets = new Insets(0, 0, 5, 5);
-		gbc_tfSenha.fill = GridBagConstraints.HORIZONTAL;
+		gbc_tfSenha.fill = GridBagConstraints.BOTH;
 		gbc_tfSenha.gridx = 1;
 		gbc_tfSenha.gridy = 5;
-		contentPane.add(tfSenha, gbc_tfSenha);
+		pnPrincipal.add(tfSenha, gbc_tfSenha);
 		
+		JLabel lblAtivo = new JLabel("Ativo*:");
+		lblAtivo.setFont(new Font("Dialog", Font.PLAIN, 12));
+		GridBagConstraints gbc_lblAtivo = new GridBagConstraints();
+		gbc_lblAtivo.insets = new Insets(0, 0, 5, 5);
+		gbc_lblAtivo.gridx = 0;
+		gbc_lblAtivo.gridy = 6;
+		pnPrincipal.add(lblAtivo, gbc_lblAtivo);
+		
+		cbAtivo = new JCheckBox();
+		cbAtivo.setSelected(true);
+		GridBagConstraints gbc_tfAtivo = new GridBagConstraints();
+		gbc_tfAtivo.gridwidth = 3;
+		gbc_tfAtivo.insets = new Insets(0, 0, 5, 5);
+		gbc_tfAtivo.fill = GridBagConstraints.BOTH;
+		gbc_tfAtivo.gridx = 1;
+		gbc_tfAtivo.gridy = 6;
+		pnPrincipal.add(cbAtivo, gbc_tfAtivo);
+		
+		JPanel pnBotoes = new JPanel(new FlowLayout());
 		btnSalvar = new JButton("Salvar");
-		GridBagConstraints gbc_btnSalvar = new GridBagConstraints();
-		gbc_btnSalvar.anchor = GridBagConstraints.EAST;
-		gbc_btnSalvar.insets = new Insets(0, 0, 5, 5);
-		gbc_btnSalvar.gridx = 2;
-		gbc_btnSalvar.gridy = 7;
-		contentPane.add(btnSalvar, gbc_btnSalvar);
-		
+		btnSalvar.setForeground(new Color(255, 255, 255));
+		btnSalvar.setBackground(new Color(60, 179, 113));
+		btnSalvar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/check.png")));
+		btnSalvar.setFocusPainted(false);
+		btnSalvar.setMnemonic(KeyEvent.VK_S);
 		btnSalvar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				boolean erros = false;
-				FuncionarioDao funcDao = new FuncionarioDao();
 
-				if(editar) {
-					String senha = new String(tfSenha.getPassword());
+				if(tipo == 1) {
+					String senha = Funcoes.md5(new String(tfSenha.getPassword()));
 					Funcionario funcionario = new Funcionario(f.getId(),tfMatricula.getText(), tfNome.getText(), tfCpf.getText(),
 							   (senha.isEmpty() ? f.getSenha() : senha), Funcoes.converterDataEUA(tfDataNasc.getText()),
-					   tfFuncao.getText(), true, 1);
-					erros = funcDao.update(funcionario) ? false : true;
-				}else {
+					   tfFuncao.getText(), cbAtivo.isSelected(), 1);
+					erros = FuncionarioDao.update(funcionario) ? false : true;
+				}
+				else if(tipo == 2)
+				{
+					erros = FuncionarioDao.delete(f) ? false : true;
+				}
+				else {
 					Funcionario funcionario = new Funcionario(tfMatricula.getText(), tfNome.getText(), tfCpf.getText(),
-							new String(tfSenha.getPassword()), Funcoes.converterDataEUA(tfDataNasc.getText()),
-							tfFuncao.getText(), true, 1);
-					erros = funcDao.insert(funcionario) ? false : true; 				
+							Funcoes.md5(new String(tfSenha.getPassword())), Funcoes.converterDataEUA(tfDataNasc.getText()),
+							tfFuncao.getText(), cbAtivo.isSelected(), 1);
+					erros = FuncionarioDao.insert(funcionario) ? false : true; 				
 				}
 				
 				if(erros)
 					Funcoes.mostrarMensagemErro("Erro ao salvar");
+				else {
+					pai.tbModel.setDados(FuncionarioDao.getAll());
+					String msg = "Funcionário adicionado com sucesso!";
+					if(tipo == 1)
+						msg = "Funcionário alterado com sucesso!";
+					else if(tipo == 2)
+						msg = "Funcionário excluído com sucesso!";
+					Funcoes.mostrarMensagemSucesso(msg);
+					
+					pai.tbModel.setDados(FuncionarioDao.getAll());
+				}
 				
-				pai.tbModel.setDados(FuncionarioDao.getAll());
 				dispose();
 			}
 		});
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		GridBagConstraints gbc_btnCancelar = new GridBagConstraints();
-		gbc_btnCancelar.anchor = GridBagConstraints.WEST;
-		gbc_btnCancelar.insets = new Insets(0, 0, 5, 0);
-		gbc_btnCancelar.gridx = 3;
-		gbc_btnCancelar.gridy = 7;
-		contentPane.add(btnCancelar, gbc_btnCancelar);
-		
+		btnCancelar.setForeground(new Color(255, 255, 255));
+		btnCancelar.setBackground(new Color(232, 91, 84));
+		btnCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		btnCancelar.setFocusPainted(false);
+		btnCancelar.setMnemonic(KeyEvent.VK_S);
 		btnCancelar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -228,7 +285,15 @@ public class FrameCadastroFuncionario extends JFrame {
 			}
 		});
 		
+		pnBotoes.add(btnSalvar);
+		pnBotoes.add(btnCancelar);
+		contentPane.add(pnBotoes, BorderLayout.SOUTH);
 		
+		setResizable(false);
+		setTitle("Cadastrar Funcionário");
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setSize(520,310);
+		setLocationRelativeTo(null);
 		setVisible(true);
 	}
 	
@@ -236,7 +301,8 @@ public class FrameCadastroFuncionario extends JFrame {
 		tfMatricula.setText(f.getMatricula());
 		tfNome.setText(f.getNome());
 		tfCpf.setText(f.getCpf());
-		tfDataNasc.setText(Funcoes.converterDataBR(f.getDt_nasc()));
+		tfDataNasc.setText(Funcoes.converterDataBR(f.getDataNascimento()));
 		tfFuncao.setText(f.getFuncao());
+		cbAtivo.setSelected(f.isAtivo());
 	}
 }

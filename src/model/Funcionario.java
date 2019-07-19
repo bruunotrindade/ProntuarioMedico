@@ -2,7 +2,7 @@ package model;
 
 public class Funcionario {
 	private int id, permissao;
-	private String matricula, nome, cpf, senha, dt_nasc, funcao;
+	private String matricula, nome, cpf, senha, dataNascimento, funcao;
 	private boolean ativo;
 	
 	/*
@@ -17,10 +17,10 @@ public class Funcionario {
 		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
+		this.setFuncao(funcao);
 		this.cpf = cpf;
 		this.senha = senha;
-		this.dt_nasc = dt_nasc;
-		this.funcao = funcao;
+		this.dataNascimento = dt_nasc;
 		this.ativo = ativo;
 		this.permissao = permissao;
 	}
@@ -28,11 +28,11 @@ public class Funcionario {
 	public Funcionario(String matricula, String nome, String cpf, String senha, String dt_nasc, String funcao,
 			boolean ativo, int permissao) {
 		this.matricula = matricula;
+		this.setFuncao(funcao);
 		this.nome = nome;
 		this.cpf = cpf;
 		this.senha = senha;
-		this.dt_nasc = dt_nasc;
-		this.funcao = funcao;
+		this.dataNascimento = dt_nasc;
 		this.ativo = ativo;
 		this.permissao = permissao;
 	}
@@ -77,20 +77,12 @@ public class Funcionario {
 		this.senha = senha;
 	}
 
-	public String getDt_nasc() {
-		return dt_nasc;
+	public String getDataNascimento() {
+		return dataNascimento;
 	}
 
-	public void setDt_nasc(String dt_nasc) {
-		this.dt_nasc = dt_nasc;
-	}
-
-	public String getFuncao() {
-		return funcao;
-	}
-
-	public void setFuncao(String funcao) {
-		this.funcao = funcao;
+	public void setDataNascimento(String dt_nasc) {
+		this.dataNascimento = dt_nasc;
 	}
 
 	public boolean isAtivo() {
@@ -107,5 +99,13 @@ public class Funcionario {
 
 	public void setPermissao(int permissao) {
 		this.permissao = permissao;
+	}
+
+	public String getFuncao() {
+		return funcao;
+	}
+
+	public void setFuncao(String funcao) {
+		this.funcao = funcao;
 	}
 }

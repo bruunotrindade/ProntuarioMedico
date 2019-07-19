@@ -29,7 +29,7 @@ public class FuncionarioTableModel extends BasicTableModel
 			case 3:
 				return funcionario.getCpf();
 			case 4:
-				return Funcoes.converterDataBR(funcionario.getDt_nasc());
+				return Funcoes.converterDataBR(funcionario.getDataNascimento());
 			case 5:
 				return funcionario.getFuncao();
 			case 6:

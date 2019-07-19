@@ -12,7 +12,7 @@ public class FuncionarioDao extends Dao {
 	public static boolean insert(Funcionario p) {
 		if(p != null) {
 			return mysql.query("INSERT INTO funcionarios VALUES (DEFAULT, '"+p.getMatricula()+"','" + p.getNome() + "','"+p.getCpf()+"','"+p.getSenha()+
-					"','"+p.getDt_nasc()+"','"+p.getFuncao()+"','"+(p.isAtivo() ? 'S':'N')+"',"+p.getPermissao()+")");	
+					"','"+p.getDataNascimento()+"','"+p.getFuncao()+"','"+(p.isAtivo() ? 'S':'N')+"',"+p.getPermissao()+")");	
 		}
 		return false;
 	}
@@ -20,8 +20,8 @@ public class FuncionarioDao extends Dao {
 	public static boolean update(Funcionario p) {
 		if(p != null) {
 			return mysql.query("UPDATE funcionarios SET MATRICULA='"+p.getMatricula() +"', NOME='" + p.getNome() + "', CPF='"+p.getCpf()+
-					"', SENHA='"+p.getSenha()+"', DT_NASCIMENTO='"+p.getDt_nasc()+"', FUNCAO='"+p.getFuncao()+
-					"', ATIVO='"+ (p.isAtivo() ? "S" : "N") + "', PERMISSAO="+p.getPermissao()+" WHERE ID=" + p.getId());	
+					"', SENHA='"+p.getSenha()+"', DT_NASCIMENTO='"+p.getDataNascimento()+"', FUNCAO='"+p.getFuncao()+"', ATIVO='"+ (p.isAtivo() ? "S" : "N") + "', PERMISSAO="+
+					p.getPermissao()+" WHERE ID=" + p.getId());	
 		}
 		return false;
 	}
@@ -69,7 +69,7 @@ public class FuncionarioDao extends Dao {
 				HashMap<String, Object> r = mysql.fetch_assoc();
 				
 				return new Funcionario((int) r.get("ID"), (String) r.get("MATRICULA"),(String) r.get("NOME"),(String) r.get("CPF"),
-							(String) r.get("SENHA"), r.get("DT_NASCIMENTO").toString(),(String) r.get("FUNCAO"), r.get("ATIVO").equals("S"),
+							(String) r.get("SENHA"), r.get("DT_NASCIMENTO").toString(), (String) r.get("FUNCAO"), r.get("ATIVO").equals("S"),
 							(int) r.get("PERMISSAO"));
 			}
 			return null;
@@ -88,9 +88,8 @@ public class FuncionarioDao extends Dao {
 			
 			for(HashMap<String,Object> r : resultado) {
 				Funcionario p = new Funcionario((int) r.get("ID"), (String) r.get("MATRICULA"),(String) r.get("NOME"),(String) r.get("CPF"),
-						(String) r.get("SENHA"), (String)r.get("DT_NASCIMENTO").toString(),(String) r.get("FUNCAO"),r.get("ATIVO").equals("S"),
+						(String) r.get("SENHA"), (String)r.get("DT_NASCIMENTO").toString(), (String) r.get("FUNCAO"),r.get("ATIVO").equals("S"),
 						(int) r.get("PERMISSAO"));
-				System.out.println(p.getNome() + p.getId());
 				ps.add(p);
 			}
 			

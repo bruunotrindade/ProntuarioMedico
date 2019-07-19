@@ -13,7 +13,7 @@ public class MedicoTableModel extends BasicTableModel
 	public MedicoTableModel(ArrayList<Medico> dados) 
 	{
 		super(new ArrayList<Object>(dados));
-		this.columns = new String[] {"Código", "CRM", "Matricula", "Nome", "CPF", "Dt Nasc", "Função", "Especialidade", "Ativo"};
+		this.columns = new String[] {"Código", "CRM", "Matricula", "Nome", "CPF", "Dt Nasc", "Especialidade", "Ativo"};
 	}
 
 	public Object getValueAt(int rowIndex, int colIndex) 
@@ -32,12 +32,10 @@ public class MedicoTableModel extends BasicTableModel
 			case 4:
 				return medico.getCpf();
 			case 5:
-				return Funcoes.converterDataBR(medico.getDt_nasc());
+				return Funcoes.converterDataBR(medico.getDataNascimento());
 			case 6:
-				return medico.getFuncao();
-			case 7:
 				return medico.getEspecialidade();
-			case 8:
+			case 7:
 				return medico.isAtivo();
 		    default:
 		        throw new IndexOutOfBoundsException("Coluna inválida!");

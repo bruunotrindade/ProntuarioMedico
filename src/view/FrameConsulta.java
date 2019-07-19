@@ -318,13 +318,13 @@ public class FrameConsulta extends JFrame
 		if(procs.size() == 0)
 			btNovo.getActionListeners()[0].actionPerformed(null);
 		
-		JButton btSair = new JButton("Sair");
-		btSair.setForeground(new Color(255, 255, 255));
-		btSair.setBackground(new Color(232, 91, 84));
-		btSair.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
-		btSair.setFocusPainted(false);
-		btSair.setMnemonic(KeyEvent.VK_S);
-		btSair.addActionListener(new ActionListener() 
+		JButton btCancelar = new JButton("Cancelar");
+		btCancelar.setForeground(new Color(255, 255, 255));
+		btCancelar.setBackground(new Color(232, 91, 84));
+		btCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		btCancelar.setFocusPainted(false);
+		btCancelar.setMnemonic(KeyEvent.VK_C);
+		btCancelar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -332,7 +332,7 @@ public class FrameConsulta extends JFrame
 			}
 		});
 		
-		pnButoes.add(btSair);
+		pnButoes.add(btCancelar);
 		setResizable(false);
 		setVisible(true);
 		setLocationRelativeTo(null);

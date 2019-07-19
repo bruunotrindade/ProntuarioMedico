@@ -239,7 +239,7 @@ public class FrameAlterarDados extends JFrame {
 					{
 						f.setNome(nomeCompleto);
 						f.setCpf(cpf);
-						f.setDt_nasc(dtNasc);
+						f.setDataNascimento(dtNasc);
 						f.setMatricula(matricula);
 						f.setFuncao(funcao);
 						
@@ -280,7 +280,7 @@ public class FrameAlterarDados extends JFrame {
 		tfNomeCompleto.setText(f.getNome());
 		tfCPF.setText(f.getCpf());
 		tfCPF.setEnabled(false);
-		tfDtNasc.setText(Funcoes.converterDataBR(f.getDt_nasc()));
+		tfDtNasc.setText(Funcoes.converterDataBR(f.getDataNascimento()));
 		tfMatricula.setText(f.getMatricula());
 		tfMatricula.setEnabled(false);
 		tfFuncao.setText(f.getFuncao());
