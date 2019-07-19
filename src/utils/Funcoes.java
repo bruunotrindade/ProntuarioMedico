@@ -11,6 +11,25 @@ import javax.swing.JOptionPane;
 
 public class Funcoes 
 {
+	public static boolean validaCPF(String cpf)
+	{
+		boolean valido = false; 
+
+		cpf = cpf.replaceAll("[^0-9]", "");
+
+		if(cpf.length() == 11)
+		{
+			for(int i=1; i<cpf.length(); i++)
+				if(cpf.charAt(i) != cpf.charAt(i-1))
+					valido =true;
+		}
+		
+		if(valido)
+			return true;
+		else
+			return false;
+	}
+	
 	public static String converterData(String antiga, String formatoAntiga, String formatoNova)
 	{
 		try 

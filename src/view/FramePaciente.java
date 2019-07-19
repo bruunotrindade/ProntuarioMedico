@@ -674,59 +674,64 @@ public class FramePaciente extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				Paciente p = paciente;
-				String nomeCompleto = tfNome.getText(), cpf = tfCPF.getText(), dtNasc = Funcoes.converterDataEUA(tfDataNasc.getText()),
-						profissao=tfProfissao.getText();
-				char sexo=' ';
-				if(rbFeminino.isSelected())
+				if(!Funcoes.validaCPF(tfCPF.getText()))
+					Funcoes.mostrarMensagemErro("CPF Inválido!");
+				else 
 				{
-					sexo='F';
-				}
-				else
-					sexo='M';
-				
-				String uf =(String) cbUF.getSelectedItem(), estadoCivil = (String) cbEstadoCivil.getSelectedItem();
-				String logradouro = tfLogradouro.getText(), bairro = tfBairro.getText(), cep = tfCep.getText(),cidade=tfCidade.getText(),observacoes = tfObs.getText(),email=tfEmail.getText(),fone=tfFone.getText();
-				p = new Paciente(nomeCompleto, cpf,sexo, dtNasc, estadoCivil,logradouro, bairro, cidade, cep, uf, fone, email, profissao, observacoes,false);
-				
-				if(paciente != null)
-					p.setId(paciente.getId());
-				
-				if(nomeCompleto.length() == 0 || cpf.contains(" ") || dtNasc.length() == 0 || sexo == ' ')
-					Funcoes.mostrarMensagemErro("Preencha todos os campos obrigatórios (*)!");
-				else if(tipo == 0)
-				{
-					if(PacienteDao.insert(p))
+					String nomeCompleto = tfNome.getText(), cpf = tfCPF.getText(), dtNasc = Funcoes.converterDataEUA(tfDataNasc.getText()),
+							profissao=tfProfissao.getText();
+					char sexo=' ';
+					if(rbFeminino.isSelected())
 					{
-						Funcoes.mostrarMensagemSucesso("Paciente cadastrado com sucesso!");
-						FramePaciente.this.dispose();
+						sexo='F';
 					}
-				}
-				else if(tipo == 1)//Edição
-				{
-					//Não editavel
-					tfCPF.setEnabled(false);
-					tfDataNasc.setEnabled(false);
+					else
+						sexo='M';
 					
-					if(PacienteDao.update(p))
-					{
-						Funcoes.mostrarMensagemSucesso("Paciente atualizado com sucesso!");
-						FramePaciente.this.dispose();
-						pai.table.setModel(new PacienteTableModel(PacienteDao.getAll()));
-					}
-				}
-				else if(tipo == 2)//Exclusão
-				{
+					String uf =(String) cbUF.getSelectedItem(), estadoCivil = (String) cbEstadoCivil.getSelectedItem();
+					String logradouro = tfLogradouro.getText(), bairro = tfBairro.getText(), cep = tfCep.getText(),cidade=tfCidade.getText(),observacoes = tfObs.getText(),email=tfEmail.getText(),fone=tfFone.getText();
+					p = new Paciente(nomeCompleto, cpf,sexo, dtNasc, estadoCivil,logradouro, bairro, cidade, cep, uf, fone, email, profissao, observacoes,false);
 					
-					if(PacienteDao.delete(p))
+					if(paciente != null)
+						p.setId(paciente.getId());
+					
+					if(nomeCompleto.length() == 0 || cpf.contains(" ") || dtNasc.length() == 0 || sexo == ' ')
+						Funcoes.mostrarMensagemErro("Preencha todos os campos obrigatórios (*)!");
+					else if(tipo == 0)
 					{
-						Funcoes.mostrarMensagemSucesso("Paciente excluido com sucesso!");
-						FramePaciente.this.dispose();
-						pai.table.setModel(new PacienteTableModel(PacienteDao.getAll()));
+						if(PacienteDao.insert(p))
+						{
+							Funcoes.mostrarMensagemSucesso("Paciente cadastrado com sucesso!");
+							FramePaciente.this.dispose();
+						}
 					}
-				}
-				else if(tipo ==3) {
-					if(PacienteDao.getPaciente(p.getId()) != null) {
-						FramePaciente.this.dispose();
+					else if(tipo == 1)//Edição
+					{
+						//Não editavel
+						tfCPF.setEnabled(false);
+						tfDataNasc.setEnabled(false);
+						
+						if(PacienteDao.update(p))
+						{
+							Funcoes.mostrarMensagemSucesso("Paciente atualizado com sucesso!");
+							FramePaciente.this.dispose();
+							pai.table.setModel(new PacienteTableModel(PacienteDao.getAll()));
+						}
+					}
+					else if(tipo == 2)//Exclusão
+					{
+						
+						if(PacienteDao.delete(p))
+						{
+							Funcoes.mostrarMensagemSucesso("Paciente excluido com sucesso!");
+							FramePaciente.this.dispose();
+							pai.table.setModel(new PacienteTableModel(PacienteDao.getAll()));
+						}
+					}
+					else if(tipo ==3) {
+						if(PacienteDao.getPaciente(p.getId()) != null) {
+							FramePaciente.this.dispose();
+						}
 					}
 				}
 			}
