@@ -60,7 +60,7 @@ public class FramePrincipal extends JFrame
 		setLayout(new BorderLayout());
 		add(new JLabel(new ImageIcon(getClass().getClassLoader().getResource(urlBG))));	
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
-		toFront();
+		//toFront();
 		setVisible(true);
 		setResizable(false);
 		exigirLogin();

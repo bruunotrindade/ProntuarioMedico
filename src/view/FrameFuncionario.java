@@ -276,7 +276,7 @@ public class FrameFuncionario extends JFrame {
 		btnCancelar.setBackground(new Color(232, 91, 84));
 		btnCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
 		btnCancelar.setFocusPainted(false);
-		btnCancelar.setMnemonic(KeyEvent.VK_S);
+		btnCancelar.setMnemonic(KeyEvent.VK_C);
 		btnCancelar.addActionListener(new ActionListener() {
 			
 			@Override

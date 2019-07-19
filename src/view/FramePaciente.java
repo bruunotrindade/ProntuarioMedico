@@ -15,7 +15,9 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.awt.FlowLayout;
 import javax.swing.JTextPane;
 import javax.swing.border.LineBorder;
@@ -24,6 +26,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 import model.Paciente;
+import model.Pergunta;
+import model.Resposta;
 import tbmodel.PacienteTableModel;
 import utils.Funcoes;
 import dao.*;
@@ -62,21 +66,26 @@ public class FramePaciente extends JFrame {
 	private JTextField tfCidade;
 	private JTextField tfEmail;
 	private JTextField tfFone;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
 	private int tipo = 0;
 	private FrameGerenciarPaciente pai;
 	private Paciente paciente;
 	private JComboBox cbEstadoCivil;
 	private JComboBox cbUF;
 	private JTextArea tfObs;
-	private JRadioButton rbFeminino ;
-	private JRadioButton rbMasculino ;
+	private JRadioButton rbFeminino;
+	private JRadioButton rbMasculino;
+	private ArrayList<PerguntaGUI> perguntasAnamnese, perguntasHistorico;
+	private ArrayList<Pergunta> perguntasBDA, perguntasBDH;
 	
+	class PerguntaGUI
+	{
+		JTextField tfPergunta = new JTextField();
+		JRadioButton rbSim = new JRadioButton();
+		JRadioButton rbNao = new JRadioButton();
+		JTextField tfParentesco = new JTextField();
+		Pergunta p;
+	}
+
 	public FramePaciente() 
 	{
 		//Aba Anamnese
@@ -101,22 +110,22 @@ public class FramePaciente extends JFrame {
 		abaAnamnese.add(panel_7, BorderLayout.NORTH);
 		panel_7.setLayout(new BoxLayout(panel_7, BoxLayout.Y_AXIS));
 		
-		JPanel panel_10 = new JPanel();
+		JPanel panel_10 = new JPanel(new BorderLayout());
 		panel_7.add(panel_10);
 		
 		JLabel lblNewLabel_5 = new JLabel("ANAMNESE – sofreu ou sofre das doenças abaixo relacionadas? (marque Sim ou Não)");
 		panel_10.add(lblNewLabel_5);
 		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		JPanel panel_11 = new JPanel();
-		panel_11.setBorder(new LineBorder(new Color(0, 0, 0)));
-		panel_7.add(panel_11);
+		JPanel pnSCAnam = new JPanel(), pnPerguntasAnamnese = new JPanel();
+		pnSCAnam.add(pnPerguntasAnamnese);
+		abaAnamnese.add(new JScrollPane(pnSCAnam, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
 		GridBagLayout gbl_panel_11 = new GridBagLayout();
 		gbl_panel_11.columnWidths = new int[] {570, 50, 50, 0};
-		gbl_panel_11.rowHeights = new int[] {15, 0, 15, 15, 0};
+		gbl_panel_11.rowHeights = new int[] {15};
 		gbl_panel_11.columnWeights = new double[]{1.0, 0.0, 0.0, Double.MIN_VALUE};
 		gbl_panel_11.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		panel_11.setLayout(gbl_panel_11);
+		pnPerguntasAnamnese.setLayout(gbl_panel_11);
 		
 		JLabel lblNewLabel_6 = new JLabel("Doença");
 		lblNewLabel_6.setHorizontalAlignment(SwingConstants.CENTER);
@@ -125,7 +134,7 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 0;
 		gbc_lblNewLabel_6.gridy = 0;
-		panel_11.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		pnPerguntasAnamnese.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		JLabel lblNewLabel_7 = new JLabel("Sim");
 		lblNewLabel_7.setHorizontalAlignment(SwingConstants.CENTER);
@@ -134,7 +143,7 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_7.gridx = 1;
 		gbc_lblNewLabel_7.gridy = 0;
-		panel_11.add(lblNewLabel_7, gbc_lblNewLabel_7);
+		pnPerguntasAnamnese.add(lblNewLabel_7, gbc_lblNewLabel_7);
 		
 		JLabel lblNewLabel_8 = new JLabel("Não");
 		lblNewLabel_8.setHorizontalAlignment(SwingConstants.CENTER);
@@ -143,53 +152,48 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_8.fill = GridBagConstraints.BOTH;
 		gbc_lblNewLabel_8.gridx = 2;
 		gbc_lblNewLabel_8.gridy = 0;
-		panel_11.add(lblNewLabel_8, gbc_lblNewLabel_8);
+		pnPerguntasAnamnese.add(lblNewLabel_8, gbc_lblNewLabel_8);
 		
-		textField_4 = new JTextField();
-		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
-		gbc_textField_4.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_4.gridx = 0;
-		gbc_textField_4.gridy = 1;
-		panel_11.add(textField_4, gbc_textField_4);
-		textField_4.setColumns(10);
+		perguntasBDA = PerguntaDao.getBy("QUESTIONARIO", "A");
+		perguntasAnamnese = new ArrayList<PerguntaGUI>();
+		int index = 1;
 		
-		JRadioButton radioButton_1 = new JRadioButton("");
-		GridBagConstraints gbc_radioButton_1 = new GridBagConstraints();
-		gbc_radioButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_radioButton_1.gridx = 1;
-		gbc_radioButton_1.gridy = 1;
-		panel_11.add(radioButton_1, gbc_radioButton_1);
+		for(Pergunta p : perguntasBDA)
+		{
+			PerguntaGUI pg = new PerguntaGUI();
+			pg.p = p;
+			
+			GridBagConstraints gbc_textField_4 = new GridBagConstraints();
+			gbc_textField_4.insets = new Insets(0, 0, 5, 5);
+			gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_4.gridx = 0;
+			gbc_textField_4.gridy = index;
+			pnPerguntasAnamnese.add(pg.tfPergunta, gbc_textField_4);
+			pg.tfPergunta.setColumns(10);
+			pg.tfPergunta.setText(p.getDesc());
+			pg.tfPergunta.setEditable(false);
+			pg.tfPergunta.setFocusable(false);
+			
+			GridBagConstraints gbc_radioButton_1 = new GridBagConstraints();
+			gbc_radioButton_1.insets = new Insets(0, 0, 5, 5);
+			gbc_radioButton_1.gridx = 1;
+			gbc_radioButton_1.gridy = index;
+			pnPerguntasAnamnese.add(pg.rbSim, gbc_radioButton_1);
+			
+			GridBagConstraints gbc_radioButton_2 = new GridBagConstraints();
+			gbc_radioButton_2.insets = new Insets(0, 0, 5, 0);
+			gbc_radioButton_2.gridx = 2;
+			gbc_radioButton_2.gridy = index;
+			pnPerguntasAnamnese.add(pg.rbNao, gbc_radioButton_2);
+			
+			ButtonGroup bg = new ButtonGroup();
+			bg.add(pg.rbNao);
+			bg.add(pg.rbSim);
+			
+			index += 1;
+			perguntasAnamnese.add(pg);
+		}
 		
-		JRadioButton radioButton_2 = new JRadioButton("");
-		GridBagConstraints gbc_radioButton_2 = new GridBagConstraints();
-		gbc_radioButton_2.insets = new Insets(0, 0, 5, 0);
-		gbc_radioButton_2.gridx = 2;
-		gbc_radioButton_2.gridy = 1;
-		panel_11.add(radioButton_2, gbc_radioButton_2);
-		
-		textField_5 = new JTextField();
-		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
-		gbc_textField_5.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_5.gridx = 0;
-		gbc_textField_5.gridy = 2;
-		panel_11.add(textField_5, gbc_textField_5);
-		textField_5.setColumns(10);
-		
-		JRadioButton radioButton_3 = new JRadioButton("");
-		GridBagConstraints gbc_radioButton_3 = new GridBagConstraints();
-		gbc_radioButton_3.insets = new Insets(0, 0, 5, 5);
-		gbc_radioButton_3.gridx = 1;
-		gbc_radioButton_3.gridy = 2;
-		panel_11.add(radioButton_3, gbc_radioButton_3);
-		
-		JRadioButton radioButton_4 = new JRadioButton("");
-		GridBagConstraints gbc_radioButton_4 = new GridBagConstraints();
-		gbc_radioButton_4.insets = new Insets(0, 0, 5, 0);
-		gbc_radioButton_4.gridx = 2;
-		gbc_radioButton_4.gridy = 2;
-		panel_11.add(radioButton_4, gbc_radioButton_4);
 		jtb.add("Histórico Familiar", abaHistorico);
 		
 		JPanel panel = new JPanel();
@@ -203,14 +207,16 @@ public class FramePaciente extends JFrame {
 		JLabel lblNewLabel = new JLabel("ANTECEDENTES FAMILIARES - Seus familiares diretos (pai, mãe, irmãos e avós),");
 		panel_5.add(lblNewLabel);
 		
-		JPanel panel_6 = new JPanel();
-		panel.add(panel_6);
+		JPanel pnSCHist = new JPanel(), pnPerguntasHistorico = new JPanel();
+		pnSCHist.add(pnPerguntasHistorico);
+		abaHistorico.add(new JScrollPane(pnSCHist, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER), BorderLayout.CENTER);
+		
 		GridBagLayout gbl_panel_6 = new GridBagLayout();
 		gbl_panel_6.columnWidths = new int[] {350, 50, 50, 220, 0};
-		gbl_panel_6.rowHeights = new int[] {15, 0, 0, 15, 15, 0};
+		gbl_panel_6.rowHeights = new int[] {15};
 		gbl_panel_6.columnWeights = new double[]{1.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_panel_6.rowWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel_6.setLayout(gbl_panel_6);
+		pnPerguntasHistorico.setLayout(gbl_panel_6);
 		
 		JLabel lblNewLabel_1 = new JLabel("Doença");
 		lblNewLabel_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -219,7 +225,7 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_1.gridx = 0;
 		gbc_lblNewLabel_1.gridy = 0;
-		panel_6.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		pnPerguntasHistorico.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Sim");
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
@@ -228,7 +234,7 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_2.gridx = 1;
 		gbc_lblNewLabel_2.gridy = 0;
-		panel_6.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		pnPerguntasHistorico.add(lblNewLabel_2, gbc_lblNewLabel_2);
 		
 		JLabel lblNewLabel_3 = new JLabel("Não");
 		lblNewLabel_3.setHorizontalAlignment(SwingConstants.CENTER);
@@ -237,7 +243,7 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_3.gridx = 2;
 		gbc_lblNewLabel_3.gridy = 0;
-		panel_6.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		pnPerguntasHistorico.add(lblNewLabel_3, gbc_lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("Parentesco");
 		lblNewLabel_4.setHorizontalAlignment(SwingConstants.CENTER);
@@ -246,71 +252,72 @@ public class FramePaciente extends JFrame {
 		gbc_lblNewLabel_4.fill = GridBagConstraints.BOTH;
 		gbc_lblNewLabel_4.gridx = 3;
 		gbc_lblNewLabel_4.gridy = 0;
-		panel_6.add(lblNewLabel_4, gbc_lblNewLabel_4);
+		pnPerguntasHistorico.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 0;
-		gbc_textField.gridy = 1;
-		panel_6.add(textField, gbc_textField);
-		textField.setColumns(10);
 		
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("");
-		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnNewRadioButton.gridx = 1;
-		gbc_rdbtnNewRadioButton.gridy = 1;
-		panel_6.add(rdbtnNewRadioButton, gbc_rdbtnNewRadioButton);
+		perguntasBDH = PerguntaDao.getBy("QUESTIONARIO", "H");
+		perguntasHistorico = new ArrayList<PerguntaGUI>();
+		index = 1;
 		
-		JRadioButton radioButton = new JRadioButton("");
-		GridBagConstraints gbc_radioButton = new GridBagConstraints();
-		gbc_radioButton.insets = new Insets(0, 0, 5, 5);
-		gbc_radioButton.gridx = 2;
-		gbc_radioButton.gridy = 1;
-		panel_6.add(radioButton, gbc_radioButton);
-		
-		textField_1 = new JTextField();
-		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
-		gbc_textField_1.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_1.gridx = 3;
-		gbc_textField_1.gridy = 1;
-		panel_6.add(textField_1, gbc_textField_1);
-		textField_1.setColumns(10);
-		
-		textField_2 = new JTextField();
-		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
-		gbc_textField_2.insets = new Insets(0, 0, 5, 5);
-		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_2.gridx = 0;
-		gbc_textField_2.gridy = 2;
-		panel_6.add(textField_2, gbc_textField_2);
-		textField_2.setColumns(10);
-		
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("");
-		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton_1.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnNewRadioButton_1.gridx = 1;
-		gbc_rdbtnNewRadioButton_1.gridy = 2;
-		panel_6.add(rdbtnNewRadioButton_1, gbc_rdbtnNewRadioButton_1);
-		
-		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("");
-		GridBagConstraints gbc_rdbtnNewRadioButton_2 = new GridBagConstraints();
-		gbc_rdbtnNewRadioButton_2.insets = new Insets(0, 0, 5, 5);
-		gbc_rdbtnNewRadioButton_2.gridx = 2;
-		gbc_rdbtnNewRadioButton_2.gridy = 2;
-		panel_6.add(rdbtnNewRadioButton_2, gbc_rdbtnNewRadioButton_2);
-		
-		textField_3 = new JTextField();
-		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
-		gbc_textField_3.insets = new Insets(0, 0, 5, 0);
-		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField_3.gridx = 3;
-		gbc_textField_3.gridy = 2;
-		panel_6.add(textField_3, gbc_textField_3);
-		textField_3.setColumns(10);
+		for(Pergunta p : perguntasBDH)
+		{
+			PerguntaGUI pg = new PerguntaGUI();
+			pg.p = p;
+			
+			GridBagConstraints gbc_textField = new GridBagConstraints();
+			gbc_textField.insets = new Insets(0, 0, 5, 5);
+			gbc_textField.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField.gridx = 0;
+			gbc_textField.gridy = index;
+			pnPerguntasHistorico.add(pg.tfPergunta, gbc_textField);
+			pg.tfPergunta.setColumns(10);
+			pg.tfPergunta.setText(p.getDesc());
+			pg.tfPergunta.setEditable(false);
+			pg.tfPergunta.setFocusable(false);
+			
+			GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
+			gbc_rdbtnNewRadioButton.insets = new Insets(0, 0, 5, 5);
+			gbc_rdbtnNewRadioButton.gridx = 1;
+			gbc_rdbtnNewRadioButton.gridy = index;
+			pnPerguntasHistorico.add(pg.rbSim, gbc_rdbtnNewRadioButton);
+			
+			GridBagConstraints gbc_radioButton = new GridBagConstraints();
+			gbc_radioButton.insets = new Insets(0, 0, 5, 5);
+			gbc_radioButton.gridx = 2;
+			gbc_radioButton.gridy = index;
+			pnPerguntasHistorico.add(pg.rbNao, gbc_radioButton);
+			
+			GridBagConstraints gbc_textField_1 = new GridBagConstraints();
+			gbc_textField_1.insets = new Insets(0, 0, 5, 0);
+			gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
+			gbc_textField_1.gridx = 3;
+			gbc_textField_1.gridy = index;
+			pnPerguntasHistorico.add(pg.tfParentesco, gbc_textField_1);
+			pg.tfParentesco.setColumns(10);
+			
+			ButtonGroup bg = new ButtonGroup();
+			bg.add(pg.rbNao);
+			bg.add(pg.rbSim);
+			
+			pg.rbNao.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					pg.tfParentesco.setEditable(false);
+				}
+			});
+			
+			pg.rbSim.addActionListener(new ActionListener() 
+			{
+				public void actionPerformed(ActionEvent arg0) 
+				{
+					pg.tfParentesco.setEditable(true);
+				}
+			});
+
+			index += 1;
+			perguntasHistorico.add(pg);
+		}
 		
 		getContentPane().add(jtb);
 
@@ -663,14 +670,15 @@ public class FramePaciente extends JFrame {
 		abaDados.add(panel_Botoes, BorderLayout.SOUTH);
 		panel_Botoes.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton btnConfirmar = new JButton("Confirmar");
-		btnConfirmar.setForeground(new Color(255, 255, 255));
-		btnConfirmar.setBackground(new Color(60, 179, 113));
-		btnConfirmar.setIcon(new ImageIcon("/home/andrielle/ProntuarioMedico/src/Imagens/check.png"));
-		btnConfirmar.setFocusPainted(true);
-		panel_Botoes.add(btnConfirmar);
+		JButton btnSalvar = new JButton("Salvar");
+		btnSalvar.setForeground(new Color(255, 255, 255));
+		btnSalvar.setBackground(new Color(60, 179, 113));
+		btnSalvar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/check.png")));
+		btnSalvar.setFocusPainted(false);
+		btnSalvar.setMnemonic(KeyEvent.VK_S);
+		panel_Botoes.add(btnSalvar);
 		
-		btnConfirmar.addActionListener(new ActionListener() {
+		btnSalvar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				Paciente p = paciente;
@@ -697,6 +705,27 @@ public class FramePaciente extends JFrame {
 				{
 					if(PacienteDao.insert(p))
 					{
+						paciente = PacienteDao.getBy("CPF", p.getCpf()).get(0);
+						for(PerguntaGUI pg : perguntasAnamnese)
+						{
+							String conteudo = "Sim";
+							if(pg.rbNao.isSelected())
+								conteudo = "Não";
+							
+							Resposta r = new Resposta(conteudo, pg.p, paciente);
+							RespostaDao.insert(r);
+						}
+						
+						for(PerguntaGUI pg : perguntasHistorico)
+						{
+							String conteudo = pg.tfParentesco.getText();
+							if(pg.rbNao.isSelected())
+								conteudo = "Não";
+							
+							Resposta r = new Resposta(conteudo, pg.p, paciente);
+							RespostaDao.insert(r);
+						}
+						
 						Funcoes.mostrarMensagemSucesso("Paciente cadastrado com sucesso!");
 						FramePaciente.this.dispose();
 					}
@@ -709,6 +738,27 @@ public class FramePaciente extends JFrame {
 					
 					if(PacienteDao.update(p))
 					{
+						RespostaDao.delete(paciente.getId());
+						for(PerguntaGUI pg : perguntasAnamnese)
+						{
+							String conteudo = "Sim";
+							if(pg.rbNao.isSelected())
+								conteudo = "Não";
+							
+							Resposta r = new Resposta(conteudo, pg.p, paciente);
+							RespostaDao.insert(r);
+						}
+						
+						for(PerguntaGUI pg : perguntasHistorico)
+						{
+							String conteudo = pg.tfParentesco.getText();
+							if(pg.rbNao.isSelected())
+								conteudo = "Não";
+							
+							Resposta r = new Resposta(conteudo, pg.p, paciente);
+							RespostaDao.insert(r);
+						}
+						
 						Funcoes.mostrarMensagemSucesso("Paciente atualizado com sucesso!");
 						FramePaciente.this.dispose();
 						pai.table.setModel(new PacienteTableModel(PacienteDao.getAll()));
@@ -716,8 +766,7 @@ public class FramePaciente extends JFrame {
 				}
 				else if(tipo == 2)//Exclusão
 				{
-					
-					if(PacienteDao.delete(p))
+					if(RespostaDao.delete(paciente.getId()) && PacienteDao.delete(p))
 					{
 						Funcoes.mostrarMensagemSucesso("Paciente excluido com sucesso!");
 						FramePaciente.this.dispose();
@@ -734,9 +783,10 @@ public class FramePaciente extends JFrame {
 		
 		JButton btnCancelar = new JButton("Cancelar");
 		btnCancelar.setForeground(new Color(255, 255, 255));
-		btnCancelar.setBackground(new Color(220, 20, 60));
-		btnCancelar.setIcon(new ImageIcon("/home/andrielle/ProntuarioMedico/src/Imagens/cancel2.png"));
-		btnCancelar.setFocusPainted(true);
+		btnCancelar.setBackground(new Color(232, 91, 84));
+		btnCancelar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("Imagens/cancel.png")));
+		btnCancelar.setFocusPainted(false);
+		btnCancelar.setMnemonic(KeyEvent.VK_C);
 		btnCancelar.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent arg0) 
@@ -746,11 +796,10 @@ public class FramePaciente extends JFrame {
 		});
 		panel_Botoes.add(btnCancelar);
 		
-		
-	
+		setTitle("Cadastro de Paciente");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		pack();
-		setResizable(false);
+		setSize(700, 450);
+		setResizable(true);
 		setLocationRelativeTo(null);
 		setVisible(true);	
 	}
@@ -762,20 +811,18 @@ public class FramePaciente extends JFrame {
 		this.paciente = p;
 		this.tipo = tipo;
 		
-		
-		
 		tfNome.setText(p.getNome());
 		tfCPF.setText(p.getCpf());
-		tfCPF.setEnabled(false);
-		tfDataNasc.setText(Funcoes.converterDataBR(p.getDt_nasc()));
-		tfDataNasc.setEnabled(false);
+		tfCPF.setEditable(false);
+		tfDataNasc.setText(Funcoes.converterDataBR(p.getDataNascimento()));
+		tfDataNasc.setEditable(false);
 		//sexo
 		if(paciente.getSexo() == 'M')
 			rbMasculino.setSelected(true);
 		else
 			rbFeminino.setSelected(true);
 		tfProfissao.setText(p.getProfissao());
-		cbEstadoCivil.getModel().setSelectedItem(p.getEst_civil());
+		cbEstadoCivil.getModel().setSelectedItem(p.getEstadoCivil());
 		tfEmail.setText(p.getEmail());
 		tfFone.setText(p.getFone());
 		tfLogradouro.setText(p.getEndereco());
@@ -784,8 +831,47 @@ public class FramePaciente extends JFrame {
 		tfCep.setText(p.getCep());
 		tfObs.setText(p.getObs());
 		
+		ArrayList<Resposta> respostasA = RespostaDao.getByPaciente(paciente, "A");
+		int ind = 0;
+		for(Resposta r : respostasA)
+		{
+			PerguntaGUI pg = perguntasAnamnese.get(ind);
+			if(r.getConteudo().equals("Sim"))
+				pg.rbSim.setSelected(true);
+			else
+				pg.rbNao.setSelected(true);
+			
+			ind++;
+		}
 		
-		if(tipo == 2)//Deletar
+		ArrayList<Resposta> respostasH = RespostaDao.getByPaciente(paciente, "H");
+		ind = 0;
+		for(Resposta r : respostasH)
+		{
+			PerguntaGUI pg = perguntasHistorico.get(ind);
+			if(r.getConteudo().equals("Não"))
+			{
+				pg.rbNao.setSelected(true);
+				pg.tfParentesco.setEditable(false);
+			}
+			else 
+			{
+				pg.rbSim.setSelected(true);
+				pg.tfParentesco.setText(r.getConteudo());
+			}
+			
+			ind++;
+		}
+		
+		if(tipo == 1)
+			setTitle("Edição de Paciente");
+		else if(tipo == 2)
+			setTitle("Exclusão de Paciente");
+		else if(tipo == 3)
+			setTitle("Visualização de Paciente");
+			
+		
+		if(tipo >= 2)//Deletar
 		{
 			tfNome.setEditable(false);
 			tfProfissao.setEditable(false);
@@ -797,10 +883,25 @@ public class FramePaciente extends JFrame {
 			tfCidade.setEditable(false);
 			tfEmail.setEditable(false);
 			tfFone.setEditable(false);
-			tfCPF.setEnabled(false);
 			tfObs.setEditable(false);
+			tfObs.setEnabled(false);
+			rbFeminino.setEnabled(false);
+			rbMasculino.setEnabled(false);
+			
+			for(PerguntaGUI pg : perguntasAnamnese)
+			{
+				pg.tfPergunta.setEditable(false);
+				pg.rbNao.setEnabled(false);
+				pg.rbSim.setEnabled(false);
+			}
+			
+			for(PerguntaGUI pg : perguntasHistorico)
+			{
+				pg.tfPergunta.setEditable(false);
+				pg.tfParentesco.setEditable(false);
+				pg.rbNao.setEnabled(false);
+				pg.rbSim.setEnabled(false);
+			}
 		}
-		
-		
 	}
 }

@@ -208,7 +208,7 @@ public class FrameAlterarSenha extends JFrame
 		});
 		pBotoes.add(btCancelar);
 		
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		pack();
 		setLocationRelativeTo(null);
 		setTitle("Alteração de Dados");

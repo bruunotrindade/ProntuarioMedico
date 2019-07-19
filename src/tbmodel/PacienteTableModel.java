@@ -32,7 +32,7 @@ public class PacienteTableModel extends BasicTableModel
 			case 5:
 				return paciente.getCidade();
 			case 6:
-				return Funcoes.converterDataBR(paciente.getDt_nasc());
+				return Funcoes.converterDataBR(paciente.getDataNascimento());
 			case 7:
 				return paciente.getProfissao();
 		    default:
