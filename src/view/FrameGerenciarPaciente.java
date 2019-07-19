@@ -11,6 +11,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ListSelectionModel;
 
 import dao.PacienteDao;
+import model.Paciente;
 import tbmodel.PacienteTableModel;
 import utils.Funcoes;
 
@@ -65,8 +66,8 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 		btEditar.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent arg0) 
-			{
-
+			{	
+				new FramePaciente(FrameGerenciarPaciente.this,(Paciente)tbModel.getDados().get(table.getSelectedRow()),1);
 			}
 		});
 		
@@ -74,7 +75,7 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				new FramePaciente(FrameGerenciarPaciente.this,(Paciente)tbModel.getDados().get(table.getSelectedRow()),3);
 			}
 		});
 		
@@ -82,7 +83,7 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
-
+				new FramePaciente(FrameGerenciarPaciente.this,(Paciente)tbModel.getDados().get(table.getSelectedRow()),2);
 			}
 		});
 		

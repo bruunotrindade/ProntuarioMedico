@@ -242,7 +242,6 @@ public class FrameAlterarDados extends JFrame {
 						f.setDataNascimento(dtNasc);
 						f.setMatricula(matricula);
 						f.setFuncao(funcao);
-						
 						if(FuncionarioDao.update(f))
 						{
 							Funcoes.mostrarMensagemSucesso("Dados atualizados com sucesso!");
