@@ -51,6 +51,7 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				desabilitarButtons();
 				String busca = tfTexto.getText(), selected = bg.getSelection().getActionCommand();
 				if(selected.equals("Todos"))
 					tbModel.setDados(PacienteDao.getAll());
@@ -68,6 +69,7 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 			public void actionPerformed(ActionEvent arg0) 
 			{	
 				new FramePaciente(FrameGerenciarPaciente.this,(Paciente)tbModel.getDados().get(table.getSelectedRow()),1);
+				desabilitarButtons();
 			}
 		});
 		
@@ -84,6 +86,7 @@ public class FrameGerenciarPaciente extends FrameGerenciar
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				new FramePaciente(FrameGerenciarPaciente.this,(Paciente)tbModel.getDados().get(table.getSelectedRow()),2);
+				desabilitarButtons();
 			}
 		});
 		

@@ -53,6 +53,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 		{
 			public void actionPerformed(ActionEvent arg0) 
 			{
+				desabilitarButtons();
 				String busca = tfTexto.getText(), selected = bg.getSelection().getActionCommand();
 				if(selected.equals("Todos"))
 					tbModel.setDados(ConsultaDao.getAll());
@@ -72,6 +73,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				new FrameConsulta(FrameGerenciarConsulta.this, (Consulta)(tbModel.getDados().get(table.getSelectedRow())), 1);
+				desabilitarButtons();
 			}
 		});
 		
@@ -88,6 +90,7 @@ public class FrameGerenciarConsulta extends FrameGerenciar
 			public void actionPerformed(ActionEvent arg0) 
 			{
 				new FrameConsulta(FrameGerenciarConsulta.this, (Consulta)(tbModel.getDados().get(table.getSelectedRow())), 2);
+				desabilitarButtons();
 			}
 		});
 		

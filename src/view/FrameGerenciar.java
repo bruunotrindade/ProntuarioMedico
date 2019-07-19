@@ -161,4 +161,10 @@ public abstract class FrameGerenciar extends JFrame
 			rb.setSelected(true);
 		return bg;
 	}
+	
+	public void desabilitarButtons() {
+		table.clearSelection();
+		btEditar.setEnabled(false);
+		btExcluir.setEnabled(false);
+	}
 }
